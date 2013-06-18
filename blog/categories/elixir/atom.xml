@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: go | mattyw]]></title>
-  <link href="http://mattyw.github.io/blog/categories/go/atom.xml" rel="self"/>
+  <title><![CDATA[Category: elixir | mattyw]]></title>
+  <link href="http://mattyw.github.io/blog/categories/elixir/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
   <updated>2013-06-18T17:53:38+01:00</updated>
   <id>http://mattyw.github.io/</id>
@@ -113,114 +113,6 @@ end
 <p>They&rsquo;re not too different, elixir has spawn where go has &lsquo;go&rsquo; and elxir has receive where go has select. There&rsquo;s no denying that they&rsquo;re completely different languages, in some rather crude tests I&rsquo;ve done go does seem to be largely faster, but elixir let&rsquo;s me do meta-programming whilst forgetting about types.</p>
 
 <p>I expect to be blogging alot more about elixir in the future</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Unique contraint in mongo]]></title>
-    <link href="http://mattyw.github.io/blog/2013/06/12/unique-contraint-in-mongo/"/>
-    <updated>2013-06-12T12:11:00+01:00</updated>
-    <id>http://mattyw.github.io/blog/2013/06/12/unique-contraint-in-mongo</id>
-    <content type="html"><![CDATA[<p>My first post on my new blog, so let&rsquo;s keep it simple.</p>
-
-<p>In sql databases you can specify unique constrains on certain columns, like this example from postgres:</p>
-
-<p>``` sql
-create unique index idx_UniqRef on FooBar (</p>
-
-<pre><code>   UniqRef ASC);
-</code></pre>
-
-<p>```
-The question is: <strong>Is it possible to do this in a schema-less database like mongo?</strong>
-Lets' start writing some code that we want to fail. For this I&rsquo;m going to use go and <a href="http://labix.org/mgo">Gustavo&rsquo;s mgo library</a></p>
-
-<p><code>go
-+package main
-+
-+import (
-+  "labix.org/v2/mgo"
-+  "log"
-+)
-+
-+type FooBar struct {
-+  Name   string
-+  Age    int
-+  UniqId int
-+}
-+
-+func main() {
-+  session, err := mgo.Dial("127.0.0.1")
-+  if err != nil {
-+    log.Fatal(err)
-+  }
-+
-+  coll := session.DB("test").C("uniq_test")
-+  coll.DropCollection()
-+
-+  a := FooBar{"Foo", 1, 1}
-+  b := FooBar{"Bar", 2, 1}
-+
-+  err = coll.Insert(a)
-+  if err != nil {
-+    log.Fatal(err)
-+  }
-+  err = coll.Insert(b)
-+  if err == nil {
-+    log.Fatal("We wrote something but wanted to fail!")
-+  }
-+
-+}
-</code>
-Nothing too fancy here:</p>
-
-<ul>
-<li>Create a connection to our collection
-
-<ul>
-<li>If the collection exists drop it (useful for iterating quickly on this test)</li>
-</ul>
-</li>
-<li>Create two structures with a UniqId field duplicated</li>
-<li>Insert both, if the second insert doesn&rsquo;t fail log an error</li>
-</ul>
-
-
-<p>If we run it as is, we see our failure
-<code>bash
-2013/06/12 13:14:51 We wrote something but wanted to fail!
-exit status 1
-</code></p>
-
-<p>Now we&rsquo;re in a position to start looking into a solution, and it turns out we don&rsquo;t
-have to look far. Just like postgres mongo has indexes, we can create one using ensureIndex.
-Here&rsquo;s how it looks in the mgo library:</p>
-
-<p>``` go</p>
-
-<pre><code>//Let's try an index
-index := mgo.Index{
-    Key: []string{"uniqid"},
-    Unique: true,
-}
-err = coll.EnsureIndex(index)
-if err != nil {
-    log.Fatal(err)
-}
-</code></pre>
-
-<p>```</p>
-
-<p>This creates an index on our uniqid field and forces it to be unique. If we call this code
-before we try inserting here&rsquo;s what we get</p>
-
-<p><code>bash
-Failed to write! E11000 duplicate key error index: test.uniq_test.$uniqid_1  dup key: { : 1 }
-</code></p>
-
-<p>There we go, it also supports compound indexes which lets you specify multiple fields which must
-be unique, but I&rsquo;m not going to cover that here. The <a href="http://docs.mongodb.org/manual/core/indexes/">mongo documention</a>
-is a great source for more information</p>
 ]]></content>
   </entry>
   
