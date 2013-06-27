@@ -9,7 +9,7 @@
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="My journey to elixir Erlang was the first functional language I ever used. When I first started reading Programming Erlang by Joe Armstrong I was &hellip;">
+  <meta name="description" content="The idea We&rsquo;re going to use a raspberry pi and juju to setup a wordpress blog on aws. The raspberry pi is an amazing little gadget. Low power &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,211 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/27/taming-the-cloud-with-juju-and-raspberry-pi/">Taming the Cloud With Juju and Raspberry Pi</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-27T08:01:00+01:00" pubdate data-updated="true">Jun 27<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/06/27/taming-the-cloud-with-juju-and-raspberry-pi/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>The idea</h2>
+
+<p>We&rsquo;re going to use a raspberry pi and juju to setup a wordpress blog on aws.</p>
+
+<p>The raspberry pi is an amazing little gadget. Low power enough that I don&rsquo;t feel guilty about leaving it turned on overnight, but flexible enough that I can shove leds into it to grab my attention if needed.</p>
+
+<p><a href="" title="http://juju.ubuntu.com">Juju</a> is ubuntu&rsquo;s answer to setting up services in the cloud. Once installed you simply setup your credentials with an existing cloud provider like aws or hp cloud and then deploy things into it. Setting up wordpress for example is as simple as</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>juju bootstrap <span class="c"># Setup the cloud environment</span>
+</span><span class='line'>juju deploy wordpress <span class="c"># Start an instance and install wordpress on it</span>
+</span><span class='line'>juju deploy mysql <span class="c"># Start an instance and install mysql on it</span>
+</span><span class='line'>juju add-relation wordpress mysql <span class="c"># Connect wordpress and mysql together</span>
+</span><span class='line'>juju expose wordpress <span class="c">#Allow wordpress to be accessed from a public ip</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The Plan</h2>
+
+<ol>
+<li>Install go onto the raspberry pi</li>
+<li>Install juju</li>
+<li>Deploy a wordpress blog</li>
+</ol>
+
+
+<p>We&rsquo;re going to be installing the latest version of juju which is written in go.</p>
+
+<h2>Installing Go</h2>
+
+<p>Dave Cheney has written an excellent article on <a href="http://dave.cheney.net/2012/09/25/installing-go-on-the-raspberry-pi">Installing go on the raspberry pi</a>. On my model B (1.0 revision) I had to update raspi-config so that I could select the 240M/16M memory split, but you might have to see how you get on here. I choose to skip the tests and just ran ./make.bash to build go rather than all.bash.</p>
+
+<p>I was unable to build juju using go 1.0.3. I ended up building go 1.1.1 from source, which seemed to work fine. From memory I believe you need to setup a folder to be your GOPATH before you can install the latest version of go.</p>
+
+<h2>Installing Juju</h2>
+
+<p>Getting the latest tip of juju-core is easy using the go get command, it grabs all the dependencies for you, it does mean we&rsquo;re grabbing tip, but there are ways to fix that later if we need to. juju-core is hosted on launchpad.net which uses bazaar for source control. This means you need to install it before you can run go get. I was able to install it on raspian using</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get bzr
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Without doing the update I was unable to grab all of bzr&rsquo;s dependencies, so I recommend running the update first.</p>
+
+<p>Once bzr is installed you can install juju using go get:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install libcurl4-gnutls-dev
+</span><span class='line'>go get launchpad.net/juju-core/...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When it&rsquo;s finished you should find a juju binary installed. Mine ended up in my GOPATH, I think because I had something setup wrong somewhere. But if you&rsquo;ve got this far I&rsquo;m sure you&rsquo;ll be able to find it.</p>
+
+<h2>Setting up Juju</h2>
+
+<p>There&rsquo;s much better instructions for setting up juju <a href="" title="https://juju.ubuntu.com/get-started/">here</a> The basic steps come down to</p>
+
+<ol>
+<li>Setting up a public key</li>
+<li>Generating an environments.yaml file</li>
+<li>Filling the file in with the data for your cloud provider</li>
+</ol>
+
+
+<p>I configured juju for aws. My ~/.juju/environments.yaml file looked like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">amazon</span>
+</span><span class='line'><span class="l-Scalar-Plain">environments</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="l-Scalar-Plain">amazon</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ec2</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">access-key</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">MY AWS ACCESS KEY</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">secret-key</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">MY AWS SECRET KEY</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">control-bucket</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mattyw-ec2-bucket</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">admin-secret</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mattyw-ec2-admin</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once you&rsquo;ve done this, try running <strong>juju bootstrap</strong>. If it finishes without error wait a minute or so and run <strong>juju status</strong>, If all goes well you should see something like this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">$ juju status</span>
+</span><span class='line'><span class="l-Scalar-Plain">machines</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="s">&quot;0&quot;</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">agent-state</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">started</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">agent-version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.11.0</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">dns-name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ec2-23-20-228-111.compute-1.amazonaws.com</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">instance-id</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">i-0bfc3d64</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">series</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">precise</span>
+</span><span class='line'><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span> <span class="p-Indicator">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we can start the business of getting a blog up and running:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>juju deploy wordpress
+</span><span class='line'>juju deploy mysql
+</span><span class='line'>juju add-relation wordpress mysql
+</span><span class='line'>juju expose wordpress
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You might have to wait a few minutes for everything to start up, keep taking a look at the output of <strong>juju status</strong> until you see all the agent-states running and expose true on wordpress.</p>
+
+<p>When it&rsquo;s done you should see something like this in your juju status output:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'> <span class="l-Scalar-Plain">wordpress</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">charm</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">cs:precise/wordpress-15</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">exposed</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">relations</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">db</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">mysql</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">loadbalancer</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">wordpress</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">units</span><span class="p-Indicator">:</span>
+</span><span class='line'>      <span class="l-Scalar-Plain">wordpress/0</span><span class="p-Indicator">:</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">agent-state</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">started</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">agent-version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.11.0</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">machine</span><span class="p-Indicator">:</span> <span class="s">&quot;1&quot;</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">public-address</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ec2-54-234-76-38.compute-1.amazonaws.com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now point your web browser to the url in public-address and there you go, you&rsquo;re deploying stuff from your pi.</p>
+
+<p>Juju doesn&rsquo;t stop at just deploying blogs. Check out <a href="" title="http://juju.ubuntu.com">Juju</a> to see what else it can do for you</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -437,6 +642,10 @@ is a great source for more information</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/27/taming-the-cloud-with-juju-and-raspberry-pi/">Taming the Cloud With Juju and Raspberry Pi</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/17/why-i-like-elixir/">Why I Like Elixir (and Other Go Programmers Might Too)</a>
       </li>
     
@@ -448,7 +657,7 @@ is a great source for more information</p>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/elixir' style='font-size: 130.0%'>elixir(1)</a> <a href='/blog/categories/go' style='font-size: 160.0%'>go(2)</a> <a href='/blog/categories/mongo' style='font-size: 130.0%'>mongo(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/elixir' style='font-size: 120.0%'>elixir(1)</a> <a href='/blog/categories/go' style='font-size: 160.0%'>go(3)</a> <a href='/blog/categories/juju' style='font-size: 120.0%'>juju(1)</a> <a href='/blog/categories/mongo' style='font-size: 120.0%'>mongo(1)</a> <a href='/blog/categories/raspberrypi' style='font-size: 120.0%'>raspberrypi(1)</a> </span>
 </section>
 
 <section>
