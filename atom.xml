@@ -4,7 +4,7 @@
   <title><![CDATA[mattyw]]></title>
   <link href="http://mattyw.github.io/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2013-08-13T10:01:28+01:00</updated>
+  <updated>2013-08-16T14:19:44+01:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,69 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Why Juju means I don't need a VPS]]></title>
+    <link href="http://mattyw.github.io/blog/2013/08/16/why-juju-means-i-dont-need-a-vps/"/>
+    <updated>2013-08-16T13:45:00+01:00</updated>
+    <id>http://mattyw.github.io/blog/2013/08/16/why-juju-means-i-dont-need-a-vps</id>
+    <content type="html"><![CDATA[<p>tl;dr: <a href="http://juju.ubuntu.com">Juju</a> is aimed at deploying and scaling hundreds of services. But it&rsquo;s also a handy alternative to buying a VPS.</p>
+
+<p>I don&rsquo;t have a VPS, I have in the past but I&rsquo;ve never used them enough for me to be able to justify the cost long term.
+Juju provides a perfect solution to this use case.</p>
+
+<p>I have a very simple charm I call <a href="https://github.com/mattyw/charm_collection/tree/master/charms/precise/devenv">devenv</a>, it doesn&rsquo;t do much more than install stuff I use for doing development, like installing tmux and grabbing my configuration files. I&rsquo;ve blogged about it previously <a href="http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html">here</a>.</p>
+
+<p>This week I was having trouble getting a client library to connect to a simple server program I&rsquo;d written, I was lost with debugging but luckily the library author volunteered to help me out.
+I already had a binary of the server that could be used to generate the error in the client library, but I don&rsquo;t have a VPS, so what&rsquo;s the quickest way for me to make the server public so the library author can play around with it?</p>
+
+<p><a href="http://juju.ubuntu.com">Juju!</a></p>
+
+<p>All I needed to do was to add the following line to the start hook of my devenv charm:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>./app &amp;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And copy the app binary to my charm directory.</p>
+
+<p>It&rsquo;s sort of an anti pattern &ndash; but because juju copies the whole charm dir when it deploys, it will grab any binaries in the charm dir as well, it&rsquo;s not a great idea to make use of this for serious deployments, but for me it was great</p>
+
+<p>With that done all I had to do was deploy it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>juju bootstrap
+</span><span class='line'>juju deploy --repository<span class="o">=</span>charms <span class="nb">local</span>:precise/devenv
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From deciding I wanted to deploy the binary &ndash; to having it deployed was under 5 minutes. 20 minutes later the library was fixed and the server was taken down</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>juju destroy-environment
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That was it. All in all it cost around $0.02 (that&rsquo;s just over 1p). Much better than having a VPS that would largely sit idle.</p>
+
+<p>Of course the other advantage with using juju is that I&rsquo;m not tied to a particular cloud provider, so I can choose which one I want depending on the pricing at that moment. And since juju now supports local mode you can do your charm development offline to save even more money!</p>
+
+<p><strong>Great, how does this help me?</strong></p>
+
+<p>If you&rsquo;re thinking of getting a VPS &ndash; but don&rsquo;t feel you can justify the cost because of the amount of use you&rsquo;d get out of it, then you really should try out juju. Once you&rsquo;ve got it installed there&rsquo;s a handy charm that just deploys ubuntu server, it&rsquo;s a great starting point for writing a charm to setup your own development environment.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>juju deploy ubuntu
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Here&rsquo;s another link to my post about writing a charm to build a development machine: <a href="http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html">http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[simple macros in clojure and elixir]]></title>
