@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: clojure | mattyw]]></title>
-  <link href="http://mattyw.github.io/blog/categories/clojure/atom.xml" rel="self"/>
+  <title><![CDATA[Category: golang" | mattyw]]></title>
+  <link href="http://mattyw.github.io/blog/categories/golang/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
   <updated>2013-10-17T15:30:39+01:00</updated>
   <id>http://mattyw.github.io/</id>
@@ -78,78 +78,6 @@ go install github.com/mattyw/gonrepl/...
 </code></p>
 
 <p>That&rsquo;s it. Thanks for reading!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[simple macros in clojure and elixir]]></title>
-    <link href="http://mattyw.github.io/blog/2013/08/13/simple-macros-in-clojure-and-elixir/"/>
-    <updated>2013-08-13T17:34:00+01:00</updated>
-    <id>http://mattyw.github.io/blog/2013/08/13/simple-macros-in-clojure-and-elixir</id>
-    <content type="html"><![CDATA[<p>Don&rsquo;t write macros is a pretty good rule, but when you&rsquo;re learning a language it&rsquo;s quite a fun little exercise.
-One such exercise I like to try is this:</p>
-
-<p><strong>Write a function so that I can call system commands without having to wrap them in quotes.</strong></p>
-
-<p>So rather than doing this:</p>
-
-<p>cmd([&ldquo;grep&rdquo;, &ldquo;-rin&rdquo;, &ldquo;foo&rdquo;, &ldquo;./&rdquo;])</p>
-
-<p>I can do this:</p>
-
-<p>cmd([grep, -rin, foo, ./])</p>
-
-<h3>Clojure</h3>
-
-<p>In lisps like clojure, the solution is very elegant, thanks to the minimal syntax, you end up with something like:</p>
-
-<p><code>clojure
-(call grep -rin foo "./")
-</code></p>
-
-<p>And the macro to do it is also pretty elegant:</p>
-
-<p><code>clojure
-(defmacro mcall [&amp; args]
-  (let [sym (gensym)]
-  `(apply sh (map str '~args))))
-</code></p>
-
-<p>Not too much magic (as far as macros are concerned) here. Make a unique symbol with (gensysm) to keep our macro hygienic.
-We syntax quote our whole list using ` to not evaluate anything unless we say so. That means we have to do some magic with our args parameter: &lsquo;~args. ~ here means
-evaluate args (so we get the symbols we passed in) but then we quote with &rsquo; so that we don&rsquo;t evaluate these symbols. That&rsquo;s the magic that lets us not need quotes around our arguments.
-The rest of the code just puts them in the right place by mapping our args list against the str function and applying it to sh.
-This is how you use it:</p>
-
-<p><code>clojure
-(prn (mcall ls -l))
-(prn (mcall grep -rin not "./")) ; We still need quotes around ./ because it's not valid syntax
-</code></p>
-
-<p>By coincidence I blogged about clojure macros almost exactly one year ago: <a href="http://mattyjwilliams.blogspot.co.uk/2012/08/another-clojure-macro-tutorial-that-no.html">http://mattyjwilliams.blogspot.co.uk/2012/08/another-clojure-macro-tutorial-that-no.html</a></p>
-
-<h3>Elixir</h3>
-
-<p>Elixir is a lovely little language I&rsquo;ve been playing with recently, so naturally I wanted to try out the macros.
-I needed to ask a few questions on the irc channel (thanks ericmj and true_droid!), but I got it cracked:</p>
-
-<p>```elixir
-defmacro mcall(args) do</p>
-
-<pre><code>call = Enum.map_join(args, " ", Macro.to_string(&amp;1))
-quote do
-  System.cmd(unquote(call))
-end
-</code></pre>
-
-<p>end
-<code>
-Again, not much magic, map_join maps our list using the Macro.to_string function then joins at the end, this is done outside of the quote since we will work it out at compile time.
-We then pass this to System.cmd in a quote block - which means don't evaluate this yet, that will happen when we call mcall at runtime.
-</code>elixir
-IO.inspect MacroTest.mcall([ls, -l])
-IO.inspect MacroTest.mcall([grep, -rin, def, &ldquo;./&rdquo;]) # We still need quotes around ./ because it&rsquo;s not valid syntax
-```</p>
 ]]></content>
   </entry>
   
