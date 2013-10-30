@@ -205,7 +205,7 @@ function compile() {
     var req = new XMLHttpRequest();
     xmlreq = req;
     req.onreadystatechange = compileUpdate;
-    req.open("POST", "http://162.243.71.74:3999/compile", true);
+    req.open("POST", "http://162.243.74.193:3999/compile", true);
     req.setRequestHeader("Content-Type", "text/plain; charset=utf-8");
     req.send(prog); 
 }
