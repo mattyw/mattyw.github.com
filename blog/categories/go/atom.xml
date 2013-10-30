@@ -4,7 +4,7 @@
   <title><![CDATA[Category: go | mattyw]]></title>
   <link href="http://mattyw.github.io/blog/categories/go/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2013-10-30T18:12:09+00:00</updated>
+  <updated>2013-10-30T18:40:04+00:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -18,7 +18,9 @@
     <link href="http://mattyw.github.io/blog/2013/10/30/go-playground-as-a-service/"/>
     <updated>2013-10-30T13:08:00+00:00</updated>
     <id>http://mattyw.github.io/blog/2013/10/30/go-playground-as-a-service</id>
-    <content type="html"><![CDATA[<p>One of the great things about go is the whole environment you get with it, gofmt, godoc, go get. It&rsquo;s all good stuff.
+    <content type="html"><![CDATA[<p><strong><em>Update</em></strong>: So I&rsquo;ve learned that there&rsquo;s actually some work to be done here around sandboxing before it&rsquo;s actually ready for public use. Until then I&rsquo;ve removed the server, but the code is still available if you want to play around with it in a trusted setting.</p>
+
+<p>One of the great things about go is the whole environment you get with it, gofmt, godoc, go get. It&rsquo;s all good stuff.
 There&rsquo;s also a <a href="http://play.golang.org">playground</a> for you to try things out on.
 The docs also have runnable examples in them based off a similar idea:
 <a href="http://golang.org/pkg/encoding/json/#example_Unmarshal">http://golang.org/pkg/encoding/json/#example_Unmarshal</a></p>
