@@ -4,7 +4,7 @@
   <title><![CDATA[mattyw]]></title>
   <link href="http://mattyw.github.io/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2013-10-17T15:30:39+01:00</updated>
+  <updated>2013-10-30T14:27:22+00:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,167 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Go playground as a service]]></title>
+    <link href="http://mattyw.github.io/blog/2013/10/30/go-playground-as-a-service/"/>
+    <updated>2013-10-30T13:08:00+00:00</updated>
+    <id>http://mattyw.github.io/blog/2013/10/30/go-playground-as-a-service</id>
+    <content type="html"><![CDATA[<p>One of the great things about go is the whole environment you get with it, gofmt, godoc, go get. It&rsquo;s all good stuff.
+There&rsquo;s also a <a href="http://play.golang.org">playground</a> for you to try things out on.
+The docs also have runnable examples in them based off a similar idea:
+<a href="http://golang.org/pkg/encoding/json/#example_Unmarshal">http://golang.org/pkg/encoding/json/#example_Unmarshal</a></p>
+
+<p>It&rsquo;s a great idea, it means you can actually try the code out while you&rsquo;re reading the docs. But it only works on code from the stdlib. But that makes sense doesn&rsquo;t it? You don&rsquo;t want to allow anyone to import some arbitrary package.</p>
+
+<p>But it occured to me that when someone develops a package, the author might want to include runnable examples for their own code.</p>
+
+<p>The source for something similar to the playgrond is incuded in the go release (misc/goplay) I&rsquo;ve modified it very slightly to allow /compile to be called from any location.
+I&rsquo;ve called it <a href="http://github.com/mattyw/goplaas">goplaas</a> (It&rsquo;s not really as a service, but that&rsquo;s the standard suffix these days isn&#8217; it? And it got your attention!)</p>
+
+<p>The idea is you install it on your own server, and it will have access to anything installed on your GOPATH. This means you can control what packages can be imported, and also the version.</p>
+
+<p>All you need to do is put some javascript and a textarea into a webpage, point it to your server and you&rsquo;re done.</p>
+
+<p>Here&rsquo;s an example using the loggo package from launchpad.net. Try it</p>
+
+<script>
+
+function insertTabs(n) {
+    // find the selection start and end
+    var cont  = document.getElementById("edit");
+    var start = cont.selectionStart;
+    var end   = cont.selectionEnd;
+    // split the textarea content into two, and insert n tabs
+    var v = cont.value;
+    var u = v.substr(0, start);
+    for (var i=0; i<n; i++) {
+        u += "\t";
+    }
+    u += v.substr(end);
+    // set revised content
+    cont.value = u;
+    // reset caret position after inserted tabs
+    cont.selectionStart = start+n;
+    cont.selectionEnd = start+n;
+}
+
+function autoindent(el) {
+    var curpos = el.selectionStart;
+    var tabs = 0;
+    while (curpos > 0) {
+        curpos--;
+        if (el.value[curpos] == "\t") {
+            tabs++;
+        } else if (tabs > 0 || el.value[curpos] == "\n") {
+            break;
+        }
+    }
+    setTimeout(function() {
+        insertTabs(tabs);
+    }, 1);
+}
+
+function preventDefault(e) {
+    if (e.preventDefault) {
+        e.preventDefault();
+    } else {
+        e.cancelBubble = true;
+    }
+}
+
+function keyHandler(event) {
+    var e = window.event || event;
+    if (e.keyCode == 9) { // tab
+        insertTabs(1);
+        preventDefault(e);
+        return false;
+    }
+    if (e.keyCode == 13) { // enter
+        if (e.shiftKey) { // +shift
+            compile(e.target);
+            preventDefault(e);
+            return false;
+        } else {
+            autoindent(e.target);
+        }
+    }
+    return true;
+}
+
+var xmlreq;
+
+function autocompile() {
+    if(!document.getElementById("autocompile").checked) {
+        return;
+    }
+    compile();
+}
+
+function compile() {
+    var prog = document.getElementById("edit").value;
+    var req = new XMLHttpRequest();
+    xmlreq = req;
+    req.onreadystatechange = compileUpdate;
+    req.open("POST", "http://162.243.71.74:3999/compile", true);
+    req.setRequestHeader("Content-Type", "text/plain; charset=utf-8");
+    req.send(prog); 
+}
+
+function compileUpdate() {
+    var req = xmlreq;
+    if(!req || req.readyState != 4) {
+        return;
+    }
+    if(req.status == 200) {
+        document.getElementById("output").innerHTML = req.responseText;
+        document.getElementById("errors").innerHTML = "";
+    } else {
+        document.getElementById("errors").innerHTML = req.responseText;
+        document.getElementById("output").innerHTML = "";
+    }
+}
+</script>
+
+
+<pre>
+<textarea style="background-color:lightyellow;" rows="20" cols="100" autofocus="true" id="edit" spellcheck="false" onkeydown="keyHandler(event);" onkeyup="autocompile();">
+package main
+
+import (
+    "launchpad.net/loggo"
+)
+
+var logger = loggo.GetLogger("main")
+
+func main() {
+    loggo.ConfigureLoggers("<root>=INFO")
+    logger.Infof("Hey there")
+}
+</textarea>
+<div class="hints">
+(Shift-Enter to compile and run.)&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="checkbox" id="autocompile" value="checked" /> Compile and run after each keystroke
+</div>
+<div id="output"></div>
+<div id="errors"></div>
+</pre>
+
+
+<p>I&rsquo;ll try to keep my server running with goplaas for the next few weeks. If it suddenly stops working, it&rsquo;s likely that I&rsquo;ve pulled the server down. You can experiment yourself by running</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>go install github.com/mattyw/goplaas
+</span><span class='line'>./goplaas -http :9999 <span class="c">#Listen on 9999</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>goplaas includes a -compile flag for sending compilation instructions to another server, full instructions are in github.</p>
+
+<p>A good next step would be to package this all up into a docker container to allow anyone to install it with relative ease</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Clojure programming in acme]]></title>
