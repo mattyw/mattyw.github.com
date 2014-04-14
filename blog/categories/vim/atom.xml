@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vim | mattyw]]></title>
   <link href="http://mattyw.github.io/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2014-04-14T07:29:44+01:00</updated>
+  <updated>2014-04-14T08:24:35+01:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -136,7 +136,7 @@ Thankfully it seems like most of us would rather have less plugins
 
 <h3>Your favourite plugin?</h3>
 
-<p>ctrlp 142 10%</p>
+<p>ctrlp 171 13%</p>
 
 <p>syntastic 59 4%</p>
 
@@ -151,8 +151,6 @@ Thankfully it seems like most of us would rather have less plugins
 <p>surround 30 2%</p>
 
 <p>vundle 30 2%</p>
-
-<p>ctrl-p 29 2%</p>
 
 <p>pathogen 24 1%</p>
 
