@@ -9,7 +9,7 @@
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="Update: So I&rsquo;ve learned that there&rsquo;s actually some work to be done here around sandboxing before it&rsquo;s actually ready for public use &hellip;">
+  <meta name="description" content="I don&rsquo;t normally find programming koans enlightening or amusing, there is one execption &ndash; which pretty much sums up my approach to vim: 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,254 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/04/14/vim-survey-results/">Vim Survey Results</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-14T11:17:00+01:00" pubdate data-updated="true">Apr 14<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/04/14/vim-survey-results/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I don&rsquo;t normally find programming koans enlightening or amusing, there is one execption &ndash; which pretty much sums up my approach to vim:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Master Wq and the Markdown acolyte
+</span><span class='line'>
+</span><span class='line'>A Markdown acolyte came to Master Wq to demonstrate his Vim plugin.
+</span><span class='line'>
+</span><span class='line'>"See, master," he said, "I have nearly finished the Vim macros that translate Markdown into HTML.
+</span><span class='line'>My functions interweave, my parser is a paragon of efficiency, and the results nearly flawless.
+</span><span class='line'>I daresay I have mastered Vimscript, and my work will validate Vim as a modern editor for the enlightened developer!
+</span><span class='line'>Have I done rightly?"
+</span><span class='line'>
+</span><span class='line'>Master Wq read the acolyte's code for several minutes without saying anything. Then he opened a Markdown document, and typed:
+</span><span class='line'>
+</span><span class='line'>:%!markdown
+</span><span class='line'>HTML filled the buffer instantly. The acolyte began to cry.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But I was starting to get the feeling that most vim users had loads of plugins installed &ndash; so I decided I wanted to find out if this was true.</p>
+
+<p>20 minutes later I had hacked my way through a basic survey &ndash; which was full of holes and typos. Despite this I had over 1000 responses in 24 hours &ndash; which gives us our first &lsquo;statistic&rsquo;:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Vim users love talking about vim</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, here are the results. 1300 of you responded to the survey. Percentages have been rounded down to the nearest integer. Because I said so. Questions where the answers were freeform I&rsquo;ve done my best to group. But it might not be perfect.
+Each question was optional so each question had a number of empty responses, I&rsquo;ve left these out. This is why most percentages do not add up to 100%</p>
+
+<p>I welcome others to take a look at the raw results: <a href="https://docs.google.com/spreadsheet/ccc?key=0AutYm8I1SyjZdGh5V0w2ZE5FZzZMT2NYVWY5bVJkWFE&amp;usp=sharing">Link to Raw Data</a></p>
+
+<h3>Do you spend most of your time in vim or gvim?</h3>
+
+<p>I forgot about macvim, and had never heard of vim-qt &ndash; but thankfully most of you seemed to work out that my intention was &ndash; gui or terminal.</p>
+
+<p>vim 946 72%</p>
+
+<p>gvim 347 26%</p>
+
+<h3>How often do you use vim?</h3>
+
+<p>daily 1227 94%</p>
+
+<p>weekly 54 4%</p>
+
+<p>monthly 11 0.8%</p>
+
+<h3>The obligatory operating system question &ndash; Which do you use most?</h3>
+
+<p>The world is full of programmers using macs in coffee shops right?</p>
+
+<p>linux 807 62%</p>
+
+<p>os x 347 26%</p>
+
+<p>windows 131 10%</p>
+
+<p>freebsd 19 1%</p>
+
+<p>One person said they used &ldquo;your face&rdquo; which is an odd choice as my face has very poor memory management.</p>
+
+<h3>What key do you have mapped as your leader key?</h3>
+
+<p>I&rsquo;ve always just stuck with the default, althought I was aware that alot of people use &lsquo;,&rsquo;.
+Using space was new to me, but according to this it&rsquo;s one of the most popular keys</p>
+
+<p><img src="/images/leader.png"></p>
+
+<p>comma 470 36%</p>
+
+<p>backslash 309 23.7</p>
+
+<p>none/ don&rsquo;t use, never heard of leader 220 17%</p>
+
+<p>space 169 13%</p>
+
+<p>semicolon 13 1%</p>
+
+<p>forward slash 12 0.9%</p>
+
+<p>esc 11 0.8%</p>
+
+<p>colon 8</p>
+
+<p>underbar 5</p>
+
+<p>ctrl 4</p>
+
+<p>alt/ caps lock 2</p>
+
+<h3>How often do you make changes to your vimrc file?</h3>
+
+<p>montly 603 46%</p>
+
+<p>weekly 459 35%</p>
+
+<p>yearly 138 10%</p>
+
+<p>daily 60 4%</p>
+
+<p>no customisations 21 1%</p>
+
+<h3>When did you first use vim?</h3>
+
+<p>2010&rsquo;s 613 47%</p>
+
+<p>2000&rsquo;s 505 38%</p>
+
+<p>1990&rsquo;s 162 12%</p>
+
+<h3>How many plugins do you have installed at the moment?</h3>
+
+<p>This is the question I really wanted answered.
+Thankfully it seems like most of us would rather have less plugins
+<img src="/images/plugins.png"></p>
+
+<h3>Your favourite plugin?</h3>
+
+<p>ctrlp 142 10%</p>
+
+<p>syntastic 59 4%</p>
+
+<p>nerdtree 59 4%</p>
+
+<p>youcompleteme 50 3%</p>
+
+<p>fugitive 41 3%</p>
+
+<p>airline 39 3%</p>
+
+<p>surround 30 2%</p>
+
+<p>vundle 30 2%</p>
+
+<p>ctrl-p 29 2%</p>
+
+<p>pathogen 24 1%</p>
+
+<h3>Do you remove plugins you no longer user?</h3>
+
+<p>yes 1009 77%</p>
+
+<p>no 229 17%</p>
+
+<h3>What is your average typing speed?</h3>
+
+<p>61  &ndash; 80 391 30%</p>
+
+<p>41 &ndash; 60 360 27%</p>
+
+<p>> 80 344 26%</p>
+
+<p>20 &ndash; 40 wpm 121 9%</p>
+
+<p>&lt; 20 wpm 8 1%</p>
+
+<h3>Roughly how many different computers will you use in a particular week?</h3>
+
+<p>6 &ndash; 10 143 11%</p>
+
+<p>2 &ndash; 5 877 67%</p>
+
+<p>> 10 122 9%</p>
+
+<p>1 132 10%</p>
+
+<h3>Have you written a plugin?</h3>
+
+<p>no 1006 77%</p>
+
+<p>yes &ndash; publicly available  121 9%</p>
+
+<p>yes &ndash; kept it private 148 11%</p>
+
+<h3>Give me a single piece of advice</h3>
+
+<p>Some of it is great, some is crazy, you&rsquo;re welcome to take a look at the raw results:</p>
+
+<p><a href="https://docs.google.com/document/d/1cUmvNqsWgkqEEOvX5K7RMxuEvu1EZTtOKo0V1YDXguw/edit">It&rsquo;s all here</a></p>
+
+<h3>Your view of emacs?</h3>
+
+<p>never used emacs &ndash; don&rsquo;t want to 498 38%</p>
+
+<p>never used emacs &ndash; but willing to try 418 32%</p>
+
+<p>i use it every now and again 221 17%</p>
+
+<p>it&rsquo;s another tool in my toolbox 113 8%</p>
+
+<p>I spent a while trying to work out how to construct this question, what I was trying to work out is if the editor war really existed, I don&rsquo;t use emacs, but I did, and there are some things I think it does better than vim, and some things it doesn&rsquo;t.
+I spent ~2 years using emacs before moving to vim, I wanted to get a broad idea of how emacs is view by the vim community. The results were a suprise</p>
+
+<h1>That&rsquo;s it</h1>
+
+<p>That&rsquo;s all there is nothing more. I&rsquo;m not great with statistics so I encourage others to take a look at the raw data and come up with a much better &lsquo;analysis&rsquo;.
+If anyone feels that the above is in some way worthy of a small tip here&rsquo;s my btc address:</p>
+
+<p>1CQJ4VkFgV45NnwETRZnHsbZq6djN9YRGH</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/10/30/go-playground-as-a-service/">Go Playground as a Service</a></h1>
     
     
@@ -128,127 +376,8 @@ I&rsquo;ve called it <a href="http://github.com/mattyw/goplaas">goplaas</a> (It&
 
 <p>Here&rsquo;s an example using the loggo package from launchpad.net. Try it</p>
 
-<script>
-
-function insertTabs(n) {
-    // find the selection start and end
-    var cont  = document.getElementById("edit");
-    var start = cont.selectionStart;
-    var end   = cont.selectionEnd;
-    // split the textarea content into two, and insert n tabs
-    var v = cont.value;
-    var u = v.substr(0, start);
-    for (var i=0; i<n; i++) {
-        u += "\t";
-    }
-    u += v.substr(end);
-    // set revised content
-    cont.value = u;
-    // reset caret position after inserted tabs
-    cont.selectionStart = start+n;
-    cont.selectionEnd = start+n;
-}
-
-function autoindent(el) {
-    var curpos = el.selectionStart;
-    var tabs = 0;
-    while (curpos > 0) {
-        curpos--;
-        if (el.value[curpos] == "\t") {
-            tabs++;
-        } else if (tabs > 0 || el.value[curpos] == "\n") {
-            break;
-        }
-    }
-    setTimeout(function() {
-        insertTabs(tabs);
-    }, 1);
-}
-
-function preventDefault(e) {
-    if (e.preventDefault) {
-        e.preventDefault();
-    } else {
-        e.cancelBubble = true;
-    }
-}
-
-function keyHandler(event) {
-    var e = window.event || event;
-    if (e.keyCode == 9) { // tab
-        insertTabs(1);
-        preventDefault(e);
-        return false;
-    }
-    if (e.keyCode == 13) { // enter
-        if (e.shiftKey) { // +shift
-            compile(e.target);
-            preventDefault(e);
-            return false;
-        } else {
-            autoindent(e.target);
-        }
-    }
-    return true;
-}
-
-var xmlreq;
-
-function autocompile() {
-    if(!document.getElementById("autocompile").checked) {
-        return;
-    }
-    compile();
-}
-
-function compile() {
-    var prog = document.getElementById("edit").value;
-    var req = new XMLHttpRequest();
-    xmlreq = req;
-    req.onreadystatechange = compileUpdate;
-    req.open("POST", "http://162.243.74.193:3999/compile", true);
-    req.setRequestHeader("Content-Type", "text/plain; charset=utf-8");
-    req.send(prog); 
-}
-
-function compileUpdate() {
-    var req = xmlreq;
-    if(!req || req.readyState != 4) {
-        return;
-    }
-    if(req.status == 200) {
-        document.getElementById("output").innerHTML = req.responseText;
-        document.getElementById("errors").innerHTML = "";
-    } else {
-        document.getElementById("errors").innerHTML = req.responseText;
-        document.getElementById("output").innerHTML = "";
-    }
-}
-</script>
-
-
-<pre>
-<textarea style="background-color:lightyellow;" rows="20" cols="100" autofocus="true" id="edit" spellcheck="false" onkeydown="keyHandler(event);" onkeyup="autocompile();">
-package main
-
-import (
-    "launchpad.net/loggo"
-)
-
-var logger = loggo.GetLogger("main")
-
-func main() {
-    loggo.ConfigureLoggers("<root>=INFO")
-    logger.Infof("Hey there")
-}
-</textarea>
-<div class="hints">
-(Shift-Enter to compile and run.)&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="checkbox" id="autocompile" value="checked" /> Compile and run after each keystroke
-</div>
-<div id="output"></div>
-<div id="errors"></div>
-</pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>I've removed it - sorry</span></code></pre></td></tr></table></div></figure>
 
 
 <p>I&rsquo;ll try to keep my server running with goplaas for the next few weeks. If it suddenly stops working, it&rsquo;s likely that I&rsquo;ve pulled the server down. You can experiment yourself by running</p>
@@ -1138,6 +1267,10 @@ is a great source for more information</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/04/14/vim-survey-results/">Vim Survey Results</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/30/go-playground-as-a-service/">Go Playground as a Service</a>
       </li>
     
@@ -1153,15 +1286,11 @@ is a great source for more information</p>
         <a href="/blog/2013/08/13/simple-macros-in-clojure-and-elixir/">Simple Macros in Clojure and Elixir</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/06/27/taming-the-cloud-with-juju-and-raspberry-pi/">Taming the Cloud With Juju and Raspberry Pi</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/acme' style='font-size: 112.0%'>acme(1)</a> <a href='/blog/categories/clojure' style='font-size: 124.0%'>clojure(2)</a> <a href='/blog/categories/elixir' style='font-size: 124.0%'>elixir(2)</a> <a href='/blog/categories/go' style='font-size: 160.0%'>go(5)</a> <a href='/blog/categories/juju' style='font-size: 124.0%'>juju(2)</a> <a href='/blog/categories/mongo' style='font-size: 112.0%'>mongo(1)</a> <a href='/blog/categories/raspberrypi' style='font-size: 112.0%'>raspberrypi(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 112.0%'>ubuntu(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/acme' style='font-size: 112.0%'>acme(1)</a> <a href='/blog/categories/clojure' style='font-size: 124.0%'>clojure(2)</a> <a href='/blog/categories/elixir' style='font-size: 124.0%'>elixir(2)</a> <a href='/blog/categories/go' style='font-size: 160.0%'>go(5)</a> <a href='/blog/categories/juju' style='font-size: 124.0%'>juju(2)</a> <a href='/blog/categories/mongo' style='font-size: 112.0%'>mongo(1)</a> <a href='/blog/categories/raspberrypi' style='font-size: 112.0%'>raspberrypi(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 112.0%'>ubuntu(1)</a> <a href='/blog/categories/vim' style='font-size: 112.0%'>vim(1)</a> </span>
 </section>
 
 <section>
@@ -1212,7 +1341,7 @@ is a great source for more information</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Matt Williams -
+  Copyright &copy; 2014 - Matt Williams -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
