@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Why Juju means I don't need a VPS - mattyw</title>
+  <title>Getting Software Done - mattyw</title>
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="tl;dr: Juju is aimed at deploying and scaling hundreds of services. But it&rsquo;s also a handy alternative to buying a VPS. I don&rsquo;t have a VPS &hellip;">
+  <meta name="description" content="I’ve recently finished reading Getting Things Done. And I’m trying it out as my method for organising all of my work.
+Regardless of how it goes there &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mattyw.github.io/blog/2013/08/16/why-juju-means-i-dont-need-a-vps">
+  <link rel="canonical" href="http://mattyw.github.io/blog/2015/04/01/getting-software-done">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mattyw" type="application/atom+xml">
@@ -80,7 +81,7 @@
   
   <header>
     
-      <h1 class="entry-title">Why Juju Means I Don't Need a VPS</h1>
+      <h1 class="entry-title">Getting Software Done</h1>
     
     
       <p class="meta">
@@ -96,7 +97,7 @@
   
 
 
-<time datetime="2013-08-16T13:45:00+01:00" pubdate data-updated="true">Aug 16<span>th</span>, 2013</time>
+<time datetime="2015-04-01T17:10:00+01:00" pubdate data-updated="true">Apr 1<span>st</span>, 2015</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -105,61 +106,22 @@
   </header>
 
 
-<div class="entry-content"><p>tl;dr: <a href="http://juju.ubuntu.com">Juju</a> is aimed at deploying and scaling hundreds of services. But it&rsquo;s also a handy alternative to buying a VPS.</p>
+<div class="entry-content"><p>I’ve recently finished reading Getting Things Done. And I’m trying it out as my method for organising all of my work.
+Regardless of how it goes there are several key ideas which I think transfer directly onto the world of software development. These are (in no particular order):</p>
 
-<p>I don&rsquo;t have a VPS, I have in the past but I&rsquo;ve never used them enough for me to be able to justify the cost long term.
-Juju provides a perfect solution to this use case.</p>
-
-<p>I have a very simple charm I call <a href="https://github.com/mattyw/charm_collection/tree/master/charms/precise/devenv">devenv</a>, it doesn&rsquo;t do much more than install stuff I use for doing development, like installing tmux and grabbing my configuration files. I&rsquo;ve blogged about it previously <a href="http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html">here</a>.</p>
-
-<p>This week I was having trouble getting a client library to connect to a simple server program I&rsquo;d written, I was lost with debugging but luckily the library author volunteered to help me out.
-I already had a binary of the server that could be used to generate the error in the client library, but I don&rsquo;t have a VPS, so what&rsquo;s the quickest way for me to make the server public so the library author can play around with it?</p>
-
-<p><a href="http://juju.ubuntu.com">Juju!</a></p>
-
-<p>All I needed to do was to add the following line to the start hook of my devenv charm:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>./app &amp;
-</span></code></pre></td></tr></table></div></figure>
+<ul>
+<li>If something takes less than 2 minutes do it,</li>
+<li>Stuff that needs doing is defined as something that isn’t how or where is should be.</li>
+<li>A project (something that needs planning) is something that requires more than one action to complete</li>
+<li>Always think in terms of “What’s the next action?”</li>
+</ul>
 
 
-<p>And copy the app binary to my charm directory.</p>
-
-<p>It&rsquo;s sort of an anti pattern &ndash; but because juju copies the whole charm dir when it deploys, it will grab any binaries in the charm dir as well, it&rsquo;s not a great idea to make use of this for serious deployments, but for me it was great</p>
-
-<p>With that done all I had to do was deploy it:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>juju bootstrap
-</span><span class='line'>juju deploy --repository<span class="o">=</span>charms <span class="nb">local</span>:precise/devenv
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>From deciding I wanted to deploy the binary &ndash; to having it deployed was under 5 minutes. 20 minutes later the library was fixed and the server was taken down</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>juju destroy-environment
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That was it. All in all it cost around $0.02 (that&rsquo;s just over 1p). Much better than having a VPS that would largely sit idle.</p>
-
-<p>Of course the other advantage with using juju is that I&rsquo;m not tied to a particular cloud provider, so I can choose which one I want depending on the pricing at that moment. And since juju now supports local mode you can do your charm development offline to save even more money!</p>
-
-<p><strong>Great, how does this help me?</strong></p>
-
-<p>If you&rsquo;re thinking of getting a VPS &ndash; but don&rsquo;t feel you can justify the cost because of the amount of use you&rsquo;d get out of it, then you really should try out juju. Once you&rsquo;ve got it installed there&rsquo;s a handy charm that just deploys ubuntu server, it&rsquo;s a great starting point for writing a charm to setup your own development environment.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>juju deploy ubuntu
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>Here&rsquo;s another link to my post about writing a charm to build a development machine: <a href="http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html">http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html</a></p>
+<p>This last one I consider crucial especially when it comes to learning new things. I’ve been guilty of having goals such as “learn functional programming”.
+This type of thing is far too broad, you need to think it through until you end up on the next thing that needs doing to reach your goal.
+All of us are guilty of having a number of projects “on the go” as well. I’ve found forcing myself to think about the next action has really helped me make progress with them.
+In some cases I’ve made progress on projects that haven’t made progress in >2 years.
+Like everything, GTD is no silver bullet, and isn’t for everyone, but I think the book is worth reading, if you don’t find it useful, at least you know.</p>
 </div>
 
 
@@ -182,12 +144,12 @@ I already had a binary of the server that could be used to generate the error in
   
 
 
-<time datetime="2013-08-16T13:45:00+01:00" pubdate data-updated="true">Aug 16<span>th</span>, 2013</time>
+<time datetime="2015-04-01T17:10:00+01:00" pubdate data-updated="true">Apr 1<span>st</span>, 2015</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/juju/'>juju</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
+    <a class='category' href='/blog/categories/gtd/'>gtd</a>, <a class='category' href='/blog/categories/productivity/'>productivity</a>
   
 </span>
 
@@ -196,7 +158,7 @@ I already had a binary of the server that could be used to generate the error in
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2013/08/16/why-juju-means-i-dont-need-a-vps/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2013/08/16/why-juju-means-i-dont-need-a-vps/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2015/04/01/getting-software-done/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2015/04/01/getting-software-done/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -209,10 +171,8 @@ I already had a binary of the server that could be used to generate the error in
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/08/13/simple-macros-in-clojure-and-elixir/" title="Previous Post: simple macros in clojure and elixir">&laquo; simple macros in clojure and elixir</a>
+        <a class="basic-alignment left" href="/blog/2014/04/14/vim-survey-results/" title="Previous Post: Vim Survey Results">&laquo; Vim Survey Results</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/10/17/clojure-programming-in-acme/" title="Next Post: Clojure programming in acme">Clojure programming in acme &raquo;</a>
       
     </p>
   </footer>
@@ -325,8 +285,8 @@ I already had a binary of the server that could be used to generate the error in
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://mattyw.github.io/blog/2013/08/16/why-juju-means-i-dont-need-a-vps/';
-        var disqus_url = 'http://mattyw.github.io/blog/2013/08/16/why-juju-means-i-dont-need-a-vps/';
+        var disqus_identifier = 'http://mattyw.github.io/blog/2015/04/01/getting-software-done/';
+        var disqus_url = 'http://mattyw.github.io/blog/2015/04/01/getting-software-done/';
         var disqus_script = 'embed.js';
       
     (function () {

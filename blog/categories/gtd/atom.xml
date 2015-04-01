@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: gtd | mattyw]]></title>
+  <link href="http://mattyw.github.io/blog/categories/gtd/atom.xml" rel="self"/>
+  <link href="http://mattyw.github.io/"/>
+  <updated>2015-04-01T17:17:37+01:00</updated>
+  <id>http://mattyw.github.io/</id>
+  <author>
+    <name><![CDATA[Matt Williams]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Software Done]]></title>
+    <link href="http://mattyw.github.io/blog/2015/04/01/getting-software-done/"/>
+    <updated>2015-04-01T17:10:00+01:00</updated>
+    <id>http://mattyw.github.io/blog/2015/04/01/getting-software-done</id>
+    <content type="html"><![CDATA[<p>I’ve recently finished reading Getting Things Done. And I’m trying it out as my method for organising all of my work.
+Regardless of how it goes there are several key ideas which I think transfer directly onto the world of software development. These are (in no particular order):</p>
+
+<ul>
+<li>If something takes less than 2 minutes do it,</li>
+<li>Stuff that needs doing is defined as something that isn’t how or where is should be.</li>
+<li>A project (something that needs planning) is something that requires more than one action to complete</li>
+<li>Always think in terms of “What’s the next action?”</li>
+</ul>
+
+
+<p>This last one I consider crucial especially when it comes to learning new things. I’ve been guilty of having goals such as “learn functional programming”.
+This type of thing is far too broad, you need to think it through until you end up on the next thing that needs doing to reach your goal.
+All of us are guilty of having a number of projects “on the go” as well. I’ve found forcing myself to think about the next action has really helped me make progress with them.
+In some cases I’ve made progress on projects that haven’t made progress in >2 years.
+Like everything, GTD is no silver bullet, and isn’t for everyone, but I think the book is worth reading, if you don’t find it useful, at least you know.</p>
+]]></content>
+  </entry>
+  
+</feed>
