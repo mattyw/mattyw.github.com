@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: survey | mattyw]]></title>
+  <link href="http://mattyw.github.io/blog/categories/survey/atom.xml" rel="self"/>
+  <link href="http://mattyw.github.io/"/>
+  <updated>2015-04-02T17:06:52+01:00</updated>
+  <id>http://mattyw.github.io/</id>
+  <author>
+    <name><![CDATA[Matt Williams]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[What have you learned from language X?]]></title>
+    <link href="http://mattyw.github.io/blog/2015/04/02/what-have-you-learned-from-language-x/"/>
+    <updated>2015-04-02T16:58:00+01:00</updated>
+    <id>http://mattyw.github.io/blog/2015/04/02/what-have-you-learned-from-language-x</id>
+    <content type="html"><![CDATA[<p>Alan Perlis wrote
+<code>
+A language that doesn't affect the way you think about programming, is not worth knowing.
+</code>
+That&rsquo;s an interesting statement, it made me wonder what people think they&rsquo;ve learned from certain
+programming langues, and how much it differs between people.</p>
+
+<p>If you have a moment, I&rsquo;d love to know:
+<a href="https://docs.google.com/forms/d/1_Wc74F9UmGmYiD5lfJlwfFkYoEqVKsxV3_lX6Mvylno/viewform">Survey</a></p>
+]]></content>
+  </entry>
+  
+</feed>
