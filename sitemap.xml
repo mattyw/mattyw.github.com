@@ -2,56 +2,60 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://mattyw.github.io/blog/2013/06/12/unique-contraint-in-mongo/</loc>
-        <lastmod>2013-06-12T14:49:25+01:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/blog/2013/06/17/why-i-like-elixir/</loc>
-        <lastmod>2015-03-11T08:21:51+00:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
     </url>
     <url>
         <loc>
             http://mattyw.github.io/blog/2013/06/27/taming-the-cloud-with-juju-and-raspberry-pi/
         </loc>
-        <lastmod>2015-03-11T08:21:51+00:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/blog/2013/08/13/simple-macros-in-clojure-and-elixir/</loc>
-        <lastmod>2015-03-11T08:21:51+00:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/blog/2013/08/16/why-juju-means-i-dont-need-a-vps/</loc>
-        <lastmod>2015-03-11T08:21:51+00:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/blog/2013/10/17/clojure-programming-in-acme/</loc>
-        <lastmod>2015-03-11T08:21:51+00:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/blog/2013/10/30/go-playground-as-a-service/</loc>
-        <lastmod>2015-03-11T08:21:51+00:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/blog/2014/04/14/vim-survey-results/</loc>
-        <lastmod>2015-03-11T08:21:51+00:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/blog/2015/04/01/getting-software-done/</loc>
-        <lastmod>2015-04-01T17:17:36+01:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/blog/2015/04/02/what-have-you-learned-from-language-x/</loc>
-        <lastmod>2015-04-02T17:06:51+01:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
+    </url>
+    <url>
+        <loc>http://mattyw.github.io/blog/2015/04/08/generics-and-monads-in-good-time/</loc>
+        <lastmod>2015-04-08T09:33:27+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/robots.txt</loc>
-        <lastmod>2013-06-10T16:41:27+01:00</lastmod>
+        <lastmod>2015-04-08T09:10:13+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/</loc>
-        <lastmod>2015-04-02T17:06:51+01:00</lastmod>
+        <lastmod>2015-04-08T09:33:27+01:00</lastmod>
     </url>
     <url>
         <loc>http://mattyw.github.io/blog/archives/</loc>
-        <lastmod>2015-04-02T17:06:51+01:00</lastmod>
+        <lastmod>2015-04-08T09:33:27+01:00</lastmod>
     </url>
 </urlset>

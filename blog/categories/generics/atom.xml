@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: generics | mattyw]]></title>
+  <link href="http://mattyw.github.io/blog/categories/generics/atom.xml" rel="self"/>
+  <link href="http://mattyw.github.io/"/>
+  <updated>2015-04-08T09:33:28+01:00</updated>
+  <id>http://mattyw.github.io/</id>
+  <author>
+    <name><![CDATA[Matt Williams]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[generics and monads in good time]]></title>
+    <link href="http://mattyw.github.io/blog/2015/04/08/generics-and-monads-in-good-time/"/>
+    <updated>2015-04-08T09:11:00+01:00</updated>
+    <id>http://mattyw.github.io/blog/2015/04/08/generics-and-monads-in-good-time</id>
+    <content type="html"><![CDATA[<p>In this blog post I attempt to connect monads in haskell with generics in go, avoiding flame wars as I go.
+If I&rsquo;ve made mistakes please let me know and I&rsquo;ll gladly fix them.</p>
+
+<h2>The Thought</h2>
+
+<p>I&rsquo;ve just finished listening to episode 10 of the <a href="http://bikeshed.fm/10">bikeshed</a> which is
+largely a discussion about haskell, and well worth a listen to. However the conversation that starts
+at around 29:40 is what triggered this thought.</p>
+
+<h2>Haskell without monads</h2>
+
+<p>If you want to do IO in Haskell you need to use monads. But it&rsquo;s possible to write a number of programs without IO(1).</p>
+
+<p>According to <a href="http://haskell.cs.yale.edu/wp-content/uploads/2011/02/history.pdf">&ldquo;A history of haskell, being lazy with class&rdquo;</a> 6 years passed between the first
+release of haskell, and monadic IO being introduced.
+Why so long?</p>
+
+<p><strong>The language designers were under no pressure, they had time to think about how IO should be dealt with in the language.</strong></p>
+
+<h2>The question of Go Generics</h2>
+
+<p>Go doesn&rsquo;t support generics, and it&rsquo;s often cited as a big downside or even a failing of the language. However you can still write very useful programs in go
+without generics(1). But here&rsquo;s the thing:</p>
+
+<p><strong>The language designers are under no pressure, they have time to think about how generics should be dealt with in the language.</strong></p>
+
+<p>This is important. Just because a language doesn&rsquo;t do something now, doesn&rsquo;t mean it never will.
+If you&rsquo;ve not taken a look at go previously because you&rsquo;ve been swayed by the &ldquo;no generics&rdquo; argument I recomend taking a look at go again.</p>
+
+<p>(1) An infinite number for maths fans</p>
+]]></content>
+  </entry>
+  
+</feed>

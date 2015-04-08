@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: raspberrypi - mattyw</title>
+  <title>generics and monads in good time - mattyw</title>
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="Category: raspberrypi">
+  <meta name="description" content="In this blog post I attempt to connect monads in haskell with generics in go, avoiding flame wars as I go.
+If I&rsquo;ve made mistakes please let me &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mattyw.github.ioblog/categories/raspberrypi">
+  <link rel="canonical" href="http://mattyw.github.io/blog/2015/04/08/generics-and-monads-in-good-time">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mattyw" type="application/atom+xml">
@@ -76,36 +77,126 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Raspberrypi</h1>
+    
+      <h1 class="entry-title">Generics and Monads in Good Time</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-08T09:11:00+01:00" pubdate data-updated="true">Apr 8<span>th</span>, 2015</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>In this blog post I attempt to connect monads in haskell with generics in go, avoiding flame wars as I go.
+If I&rsquo;ve made mistakes please let me know and I&rsquo;ll gladly fix them.</p>
 
-  
-  <h2>2013</h2>
+<h2>The Thought</h2>
 
-<article>
-  
-<h1><a href="/blog/2013/06/27/taming-the-cloud-with-juju-and-raspberry-pi/">Taming the cloud with juju and raspberry pi</a></h1>
-<time datetime="2013-06-27T08:01:00+01:00" pubdate><span class='month'>Jun</span> <span class='day'>27</span> <span class='year'>2013</span></time>
+<p>I&rsquo;ve just finished listening to episode 10 of the <a href="http://bikeshed.fm/10">bikeshed</a> which is
+largely a discussion about haskell, and well worth a listen to. However the conversation that starts
+at around 29:40 is what triggered this thought.</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/go/'>go</a>, <a class='category' href='/blog/categories/juju/'>juju</a>, <a class='category' href='/blog/categories/raspberrypi/'>raspberrypi</a></span>
-</footer>
+<h2>Haskell without monads</h2>
 
+<p>If you want to do IO in Haskell you need to use monads. But it&rsquo;s possible to write a number of programs without IO(1).</p>
 
-</article>
+<p>According to <a href="http://haskell.cs.yale.edu/wp-content/uploads/2011/02/history.pdf">&ldquo;A history of haskell, being lazy with class&rdquo;</a> 6 years passed between the first
+release of haskell, and monadic IO being introduced.
+Why so long?</p>
 
+<p><strong>The language designers were under no pressure, they had time to think about how IO should be dealt with in the language.</strong></p>
+
+<h2>The question of Go Generics</h2>
+
+<p>Go doesn&rsquo;t support generics, and it&rsquo;s often cited as a big downside or even a failing of the language. However you can still write very useful programs in go
+without generics(1). But here&rsquo;s the thing:</p>
+
+<p><strong>The language designers are under no pressure, they have time to think about how generics should be dealt with in the language.</strong></p>
+
+<p>This is important. Just because a language doesn&rsquo;t do something now, doesn&rsquo;t mean it never will.
+If you&rsquo;ve not taken a look at go previously because you&rsquo;ve been swayed by the &ldquo;no generics&rdquo; argument I recomend taking a look at go again.</p>
+
+<p>(1) An infinite number for maths fans</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Williams</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-08T09:11:00+01:00" pubdate data-updated="true">Apr 8<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/generics/'>generics</a>, <a class='category' href='/blog/categories/go/'>go</a>, <a class='category' href='/blog/categories/haskell/'>haskell</a>, <a class='category' href='/blog/categories/monads/'>monads</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2015/04/08/generics-and-monads-in-good-time/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2015/04/08/generics-and-monads-in-good-time/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/04/02/what-have-you-learned-from-language-x/" title="Previous Post: What have you learned from language X?">&laquo; What have you learned from language X?</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -207,7 +298,10 @@
       var disqus_shortname = 'mattyw';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattyw.github.io/blog/2015/04/08/generics-and-monads-in-good-time/';
+        var disqus_url = 'http://mattyw.github.io/blog/2015/04/08/generics-and-monads-in-good-time/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
