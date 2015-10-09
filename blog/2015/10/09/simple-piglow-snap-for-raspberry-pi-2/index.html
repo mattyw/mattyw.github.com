@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: raspberrypi - mattyw</title>
+  <title>Simple piglow snap for Raspberry Pi 2 - mattyw</title>
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="Category: raspberrypi">
+  <meta name="description" content="Using a Raspberry Pi 2 with Ubuntu Snappy installed we&rsquo;re going to write a
+simple snap that will flash a piglow attached to the gpio pins. If &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mattyw.github.ioblog/categories/raspberrypi">
+  <link rel="canonical" href="http://mattyw.github.io/blog/2015/10/09/simple-piglow-snap-for-raspberry-pi-2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mattyw" type="application/atom+xml">
@@ -76,53 +77,172 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Raspberrypi</h1>
+    
+      <h1 class="entry-title">Simple Piglow Snap for Raspberry Pi 2</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-09T22:43:00+01:00" pubdate data-updated="true">Oct 9<span>th</span>, 2015</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Using a Raspberry Pi 2 with Ubuntu Snappy installed we&rsquo;re going to write a
+simple snap that will flash a piglow attached to the gpio pins.</p>
 
-  
-  <h2>2015</h2>
+<p>If you want to skip these steps you can download the snap itself from <a href="https://www.dropbox.com/s/2o298qugyts0r3o/hello-piglow_1.0.0_all.snap?dl=0">here</a></p>
 
-<article>
-  
-<h1><a href="/blog/2015/10/09/simple-piglow-snap-for-raspberry-pi-2/">Simple piglow snap for Raspberry Pi 2</a></h1>
-<time datetime="2015-10-09T22:43:00+01:00" pubdate><span class='month'>Oct</span> <span class='day'>09</span> <span class='year'>2015</span></time>
+<h2>1. A simple piglow flashing binary</h2>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/raspberrypi/'>raspberrypi</a>, <a class='category' href='/blog/categories/snappy/'>snappy</a></span>
-</footer>
+<p>To make things simple we&rsquo;ll use go to produce a simple binary that will
+flash the legs of the piglow. We&rsquo;re using go because the static compilation means
+our snap will have no dependencies to deal with. The code itself is small.
+<a href="https://github.com/mattyw/flasher">https://github.com/mattyw/flasher</a>
+I modified the piglow library I was using to get a bit more feedback about piglow
+errors, the change is trivial to revert should you need to.</p>
 
+<h2>2. Create the snap</h2>
 
-</article>
+<p>The package structure is simple</p>
 
-
-
-  
-  <h2>2013</h2>
-
-<article>
-  
-<h1><a href="/blog/2013/06/27/taming-the-cloud-with-juju-and-raspberry-pi/">Taming the cloud with juju and raspberry pi</a></h1>
-<time datetime="2013-06-27T08:01:00+01:00" pubdate><span class='month'>Jun</span> <span class='day'>27</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/go/'>go</a>, <a class='category' href='/blog/categories/juju/'>juju</a>, <a class='category' href='/blog/categories/raspberrypi/'>raspberrypi</a></span>
-</footer>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>├── bin
+</span><span class='line'>│   └── flasher
+</span><span class='line'>└── meta
+</span><span class='line'>    ├── package.yaml
+</span><span class='line'>    └── readme.md
+</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>flasher is the binary I produced in step 1. The package.yaml just contains
+information about the snap:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hello-piglow</span>
+</span><span class='line'><span class="l-Scalar-Plain">version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.0.0</span>
+</span><span class='line'><span class="l-Scalar-Plain">vendor</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">me</span>
+</span><span class='line'><span class="l-Scalar-Plain">binaries</span><span class="p-Indicator">:</span>
+</span><span class='line'> <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">bin/flasher</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once you&rsquo;ve got all this in place build it and send it over to your pi.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>snappy build .
+</span><span class='line'>snappy-remote --url<span class="o">=</span>ssh://&lt;ip-address&gt;:22 install &lt;snap-name&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. On the Pi</h2>
+
+<p>You need to give your snap permission to access the i2c device</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo snappy hw-assign hello-piglow.sideload /dev/i2c-1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. You&rsquo;re done</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo hello-piglow.flasher
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If all goes well you should have a flashing piglow</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/73tOQBqef7Q" frameborder="0" allowfullscreen></iframe>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Williams</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-09T22:43:00+01:00" pubdate data-updated="true">Oct 9<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/raspberrypi/'>raspberrypi</a>, <a class='category' href='/blog/categories/snappy/'>snappy</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2015/10/09/simple-piglow-snap-for-raspberry-pi-2/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2015/10/09/simple-piglow-snap-for-raspberry-pi-2/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/04/08/generics-and-monads-in-good-time/" title="Previous Post: generics and monads in good time">&laquo; generics and monads in good time</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -224,7 +344,10 @@
       var disqus_shortname = 'mattyw';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattyw.github.io/blog/2015/10/09/simple-piglow-snap-for-raspberry-pi-2/';
+        var disqus_url = 'http://mattyw.github.io/blog/2015/10/09/simple-piglow-snap-for-raspberry-pi-2/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

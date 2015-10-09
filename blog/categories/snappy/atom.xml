@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: snappy | mattyw]]></title>
+  <link href="http://mattyw.github.io/blog/categories/snappy/atom.xml" rel="self"/>
+  <link href="http://mattyw.github.io/"/>
+  <updated>2015-10-09T23:24:15+01:00</updated>
+  <id>http://mattyw.github.io/</id>
+  <author>
+    <name><![CDATA[Matt Williams]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Simple piglow snap for Raspberry Pi 2]]></title>
+    <link href="http://mattyw.github.io/blog/2015/10/09/simple-piglow-snap-for-raspberry-pi-2/"/>
+    <updated>2015-10-09T22:43:00+01:00</updated>
+    <id>http://mattyw.github.io/blog/2015/10/09/simple-piglow-snap-for-raspberry-pi-2</id>
+    <content type="html"><![CDATA[<p>Using a Raspberry Pi 2 with Ubuntu Snappy installed we&rsquo;re going to write a
+simple snap that will flash a piglow attached to the gpio pins.</p>
+
+<p>If you want to skip these steps you can download the snap itself from <a href="https://www.dropbox.com/s/2o298qugyts0r3o/hello-piglow_1.0.0_all.snap?dl=0">here</a></p>
+
+<h2>1. A simple piglow flashing binary</h2>
+
+<p>To make things simple we&rsquo;ll use go to produce a simple binary that will
+flash the legs of the piglow. We&rsquo;re using go because the static compilation means
+our snap will have no dependencies to deal with. The code itself is small.
+<a href="https://github.com/mattyw/flasher">https://github.com/mattyw/flasher</a>
+I modified the piglow library I was using to get a bit more feedback about piglow
+errors, the change is trivial to revert should you need to.</p>
+
+<h2>2. Create the snap</h2>
+
+<p>The package structure is simple</p>
+
+<p>```bash
+├── bin
+│   └── flasher
+└── meta</p>
+
+<pre><code>├── package.yaml
+└── readme.md
+</code></pre>
+
+<p>```</p>
+
+<p>flasher is the binary I produced in step 1. The package.yaml just contains
+information about the snap:</p>
+
+<p><code>yaml
+name: hello-piglow
+version: 1.0.0
+vendor: me
+binaries:
+ - name: bin/flasher
+</code>
+Once you&rsquo;ve got all this in place build it and send it over to your pi.</p>
+
+<p><code>bash
+snappy build .                                                                  
+snappy-remote --url=ssh://&lt;ip-address&gt;:22 install &lt;snap-name&gt;
+</code></p>
+
+<h2>3. On the Pi</h2>
+
+<p>You need to give your snap permission to access the i2c device</p>
+
+<p><code>bash
+sudo snappy hw-assign hello-piglow.sideload /dev/i2c-1
+</code></p>
+
+<h2>4. You&rsquo;re done</h2>
+
+<p><code>bash
+sudo hello-piglow.flasher
+</code></p>
+
+<p>If all goes well you should have a flashing piglow</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/73tOQBqef7Q" frameborder="0" allowfullscreen></iframe>
+
+]]></content>
+  </entry>
+  
+</feed>
