@@ -4,7 +4,7 @@
   <title><![CDATA[mattyw]]></title>
   <link href="http://mattyw.github.io/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2015-10-09T23:24:15+01:00</updated>
+  <updated>2015-10-14T09:03:04+01:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,91 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Keep a Logbook and love your tools]]></title>
+    <link href="http://mattyw.github.io/blog/2015/10/12/keep-a-logbook/"/>
+    <updated>2015-10-12T09:46:00+01:00</updated>
+    <id>http://mattyw.github.io/blog/2015/10/12/keep-a-logbook</id>
+    <content type="html"><![CDATA[<h2>TL;DR</h2>
+
+<p>If your job requires thinking of any kind you should be keeping a log book/ journal
+to keep a note of what you are doing. If you learn to love the process of keeping the journal
+it will be even more useful to you.</p>
+
+<h2>The story</h2>
+
+<p>When I first started work I instinctively started keeping a logbook of all of my activities.
+I grabbed an A4 notebook out of the stationary cupboard and started writing, this was mostly
+because the rate of information coming at me was more than I could handle, so I wanted
+somewhere to store it that was better than my head.
+But it was also because I could own a nice A4 notebook without having to pay for it, and this was quite a novelty.</p>
+
+<p>Then this year I discovered the <a href="http://www.relay.fm/penaddict">pen addict podcast</a> and (despite
+my left handedness) I really got into paper and pens again. For the past 3 months I&rsquo;ve been
+keeping a log of my work. Experiments, meetings, things that need fixing, ideas, new tricks, everything to do with my job.</p>
+
+<h2>Keep a Logbook</h2>
+
+<p>This is how I make use of a logbook, it&rsquo;s mostly common sense:</p>
+
+<ol>
+<li>Always have it with me, even if I go for a walk.</li>
+<li>If you&rsquo;re working at your desk, have it within arms reach.</li>
+<li>If you take a break, leave a note of where you&rsquo;ve left off.</li>
+<li>When you return from a break refer to your log book to help you regain context.</li>
+</ol>
+
+
+<p>This is what I write:</p>
+
+<ol>
+<li>Things I need to remember.</li>
+<li>Things I need to do.</li>
+<li>Things I want to talk about with colleagues.</li>
+<li>Ideas for future projects.</li>
+<li>Solutions to problems</li>
+<li>Results of experiments I&rsquo;ve done</li>
+<li>Cool tricks I&rsquo;ve discovered (editor shortcuts, programming patterns etc)</li>
+</ol>
+
+
+<h2>Reviewing your Logbook</h2>
+
+<p>An important part of any process is reviewing. Most days I will flip through recent pages of my notebooks
+and record anything that I think is important in Evernote or my teams kanban board.
+The act of reviewing notes also helps cement any new tricks I&rsquo;d learned.
+The whole process I use is a topic for another time.</p>
+
+<h2>Love your tools</h2>
+
+<p>Something I&rsquo;ve known to be true in programming for a number of years is that if you
+can learn to really love the tools you use then no matter how mundane your task seems to
+be you will love doing it, because using the tools is part of the fun. I&rsquo;ve started to realise
+that the same is true of a number of walks of life. I&rsquo;ve bought a couple of fountain pens, made my own
+pocket and full size midori notebooks, spent a stupid amount of money on field notes. But I
+also have a collection of programming related notes, ideas, insights that I keep catalogued. The
+process of writing all these notes is one I enjoy, in fact I look forward to it because I&rsquo;ve come
+to love the tools I use to do it.</p>
+
+<h2>My tools</h2>
+
+<p><img src="http://mattyw.github.io/images/notebooks.jpg"></p>
+
+<p>Here&rsquo;s my current stuff (left->right, top->bottom)</p>
+
+<ol>
+<li>A4 clipboard from some team building thing I did a number of years back.</li>
+<li>A Field notes sized fauxdori (it also supports midori inserts).</li>
+<li>A lamy safari with LH nib.</li>
+<li>A Kaweco skyline with F nib.</li>
+<li>Full size fauxdori. (It also support field notes)</li>
+</ol>
+
+
+<p>I made both fauxdoris myself, which means the act of using them is a pleasure in itself.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Simple piglow snap for Raspberry Pi 2]]></title>
