@@ -4,7 +4,7 @@
   <title><![CDATA[Category: juju | mattyw]]></title>
   <link href="http://mattyw.github.io/blog/categories/juju/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2015-10-14T09:03:04+01:00</updated>
+  <updated>2015-10-19T13:09:10+01:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Video: Juju status flasher on ubuntu snappy]]></title>
+    <link href="http://mattyw.github.io/blog/2015/10/18/snappy-juju-flasher-video/"/>
+    <updated>2015-10-18T10:02:00+01:00</updated>
+    <id>http://mattyw.github.io/blog/2015/10/18/snappy-juju-flasher-video</id>
+    <content type="html"><![CDATA[<iframe width="560" height="315" src="https://www.youtube.com/embed/JnbrWRDFqVo" frameborder="0" allowfullscreen></iframe>
+
+
+<p>I&rsquo;d like to share a proof of concept project I&rsquo;ve been working on that combines
+the worlds of ubuntu snappy and juju.</p>
+
+<p>I wanted to use the flashing leds on the raspberry pi 2&rsquo;s piglow to tell me the
+status of my cloud services. The idea being that if there&rsquo;s something I need to fix
+the flashing leds will tell me, without me having to keep checking my phone or laptop
+to get updates.</p>
+
+<p>This demo will use the <a href="https://jujucharms.com/realtime-syslog-analytics/">realtime syslog analytics</a>
+big data bundle as my example environment. It&rsquo;s deployed in ec2 but it&rsquo;s controlled and managed
+by juju running on my raspberry pi. I&rsquo;m going to show you a working environment with happy led status.
+Then I&rsquo;m going to cause some trouble and we&rsquo;ll see the leds change to unhappy.</p>
+
+<p>The idea being that if I want to know the status of my cloud services I only need to glance at my
+raspberry pi for a moment.</p>
+
+<p>There&rsquo;s still some work to be done around optimising the various led patterns. There could be a way
+that I could convey seriousness of the problem via the leds, or even how long there has been a problem.
+That&rsquo;s work that can come later.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Why Juju means I don't need a VPS]]></title>

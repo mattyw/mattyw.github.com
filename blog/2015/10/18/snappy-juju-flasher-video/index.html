@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: ubuntu - mattyw</title>
+  <title>Video: Juju status flasher on ubuntu snappy - mattyw</title>
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="Category: ubuntu">
+  <meta name="description" content="I&rsquo;d like to share a proof of concept project I&rsquo;ve been working on that combines
+the worlds of ubuntu snappy and juju. I wanted to use &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mattyw.github.ioblog/categories/ubuntu">
+  <link rel="canonical" href="http://mattyw.github.io/blog/2015/10/18/snappy-juju-flasher-video">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mattyw" type="application/atom+xml">
@@ -76,53 +77,118 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Ubuntu</h1>
+    
+      <h1 class="entry-title">Video: Juju Status Flasher on Ubuntu Snappy</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-18T10:02:00+01:00" pubdate data-updated="true">Oct 18<span>th</span>, 2015</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
-
-  
-  <h2>2015</h2>
-
-<article>
-  
-<h1><a href="/blog/2015/10/18/snappy-juju-flasher-video/">Video: Juju status flasher on ubuntu snappy</a></h1>
-<time datetime="2015-10-18T10:02:00+01:00" pubdate><span class='month'>Oct</span> <span class='day'>18</span> <span class='year'>2015</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/juju/'>juju</a>, <a class='category' href='/blog/categories/raspberrypi/'>raspberrypi</a>, <a class='category' href='/blog/categories/snappy/'>snappy</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a></span>
-</footer>
+<div class="entry-content"><iframe width="560" height="315" src="https://www.youtube.com/embed/JnbrWRDFqVo" frameborder="0" allowfullscreen></iframe>
 
 
-</article>
+<p>I&rsquo;d like to share a proof of concept project I&rsquo;ve been working on that combines
+the worlds of ubuntu snappy and juju.</p>
 
+<p>I wanted to use the flashing leds on the raspberry pi 2&rsquo;s piglow to tell me the
+status of my cloud services. The idea being that if there&rsquo;s something I need to fix
+the flashing leds will tell me, without me having to keep checking my phone or laptop
+to get updates.</p>
 
+<p>This demo will use the <a href="https://jujucharms.com/realtime-syslog-analytics/">realtime syslog analytics</a>
+big data bundle as my example environment. It&rsquo;s deployed in ec2 but it&rsquo;s controlled and managed
+by juju running on my raspberry pi. I&rsquo;m going to show you a working environment with happy led status.
+Then I&rsquo;m going to cause some trouble and we&rsquo;ll see the leds change to unhappy.</p>
 
-  
-  <h2>2013</h2>
+<p>The idea being that if I want to know the status of my cloud services I only need to glance at my
+raspberry pi for a moment.</p>
 
-<article>
-  
-<h1><a href="/blog/2013/08/16/why-juju-means-i-dont-need-a-vps/">Why Juju means I don't need a VPS</a></h1>
-<time datetime="2013-08-16T13:45:00+01:00" pubdate><span class='month'>Aug</span> <span class='day'>16</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/juju/'>juju</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a></span>
-</footer>
-
-
-</article>
-
+<p>There&rsquo;s still some work to be done around optimising the various led patterns. There could be a way
+that I could convey seriousness of the problem via the leds, or even how long there has been a problem.
+That&rsquo;s work that can come later.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Matt Williams</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-18T10:02:00+01:00" pubdate data-updated="true">Oct 18<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/juju/'>juju</a>, <a class='category' href='/blog/categories/raspberrypi/'>raspberrypi</a>, <a class='category' href='/blog/categories/snappy/'>snappy</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2015/10/18/snappy-juju-flasher-video/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2015/10/18/snappy-juju-flasher-video/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/10/12/keep-a-logbook/" title="Previous Post: Keep a Logbook and love your tools">&laquo; Keep a Logbook and love your tools</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -224,7 +290,10 @@
       var disqus_shortname = 'mattyw';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mattyw.github.io/blog/2015/10/18/snappy-juju-flasher-video/';
+        var disqus_url = 'http://mattyw.github.io/blog/2015/10/18/snappy-juju-flasher-video/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

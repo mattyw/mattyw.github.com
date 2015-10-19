@@ -9,8 +9,8 @@
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="TL;DR If your job requires thinking of any kind you should be keeping a log book/ journal
-to keep a note of what you are doing. If you learn to love &hellip;">
+  <meta name="description" content="I&rsquo;d like to share a proof of concept project I&rsquo;ve been working on that combines
+the worlds of ubuntu snappy and juju. I wanted to use &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,65 @@ to keep a note of what you are doing. If you learn to love &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/18/snappy-juju-flasher-video/">Video: Juju Status Flasher on Ubuntu Snappy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-18T10:02:00+01:00" pubdate data-updated="true">Oct 18<span>th</span>, 2015</time>
+        
+         | <a href="/blog/2015/10/18/snappy-juju-flasher-video/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><iframe width="560" height="315" src="https://www.youtube.com/embed/JnbrWRDFqVo" frameborder="0" allowfullscreen></iframe>
+
+
+<p>I&rsquo;d like to share a proof of concept project I&rsquo;ve been working on that combines
+the worlds of ubuntu snappy and juju.</p>
+
+<p>I wanted to use the flashing leds on the raspberry pi 2&rsquo;s piglow to tell me the
+status of my cloud services. The idea being that if there&rsquo;s something I need to fix
+the flashing leds will tell me, without me having to keep checking my phone or laptop
+to get updates.</p>
+
+<p>This demo will use the <a href="https://jujucharms.com/realtime-syslog-analytics/">realtime syslog analytics</a>
+big data bundle as my example environment. It&rsquo;s deployed in ec2 but it&rsquo;s controlled and managed
+by juju running on my raspberry pi. I&rsquo;m going to show you a working environment with happy led status.
+Then I&rsquo;m going to cause some trouble and we&rsquo;ll see the leds change to unhappy.</p>
+
+<p>The idea being that if I want to know the status of my cloud services I only need to glance at my
+raspberry pi for a moment.</p>
+
+<p>There&rsquo;s still some work to be done around optimising the various led patterns. There could be a way
+that I could convey seriousness of the problem via the leds, or even how long there has been a problem.
+That&rsquo;s work that can come later.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -983,120 +1042,6 @@ I already had a binary of the server that could be used to generate the error in
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/13/simple-macros-in-clojure-and-elixir/">Simple Macros in Clojure and Elixir</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-13T17:34:00+01:00" pubdate data-updated="true">Aug 13<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/08/13/simple-macros-in-clojure-and-elixir/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Don&rsquo;t write macros is a pretty good rule, but when you&rsquo;re learning a language it&rsquo;s quite a fun little exercise.
-One such exercise I like to try is this:</p>
-
-<p><strong>Write a function so that I can call system commands without having to wrap them in quotes.</strong></p>
-
-<p>So rather than doing this:</p>
-
-<p>cmd([&ldquo;grep&rdquo;, &ldquo;-rin&rdquo;, &ldquo;foo&rdquo;, &ldquo;./&rdquo;])</p>
-
-<p>I can do this:</p>
-
-<p>cmd([grep, -rin, foo, ./])</p>
-
-<h3>Clojure</h3>
-
-<p>In lisps like clojure, the solution is very elegant, thanks to the minimal syntax, you end up with something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">call</span> <span class="nv">grep</span> <span class="nv">-rin</span> <span class="nv">foo</span> <span class="s">&quot;./&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And the macro to do it is also pretty elegant:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defmacro </span><span class="nv">mcall</span> <span class="p">[</span><span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">sym</span> <span class="p">(</span><span class="nf">gensym</span><span class="p">)]</span>
-</span><span class='line'>  <span class="o">`</span><span class="p">(</span><span class="nb">apply </span><span class="nv">sh</span> <span class="p">(</span><span class="nb">map str </span><span class="o">&#39;~</span><span class="nv">args</span><span class="p">))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Not too much magic (as far as macros are concerned) here. Make a unique symbol with (gensysm) to keep our macro hygienic.
-We syntax quote our whole list using ` to not evaluate anything unless we say so. That means we have to do some magic with our args parameter: &lsquo;~args. ~ here means
-evaluate args (so we get the symbols we passed in) but then we quote with &rsquo; so that we don&rsquo;t evaluate these symbols. That&rsquo;s the magic that lets us not need quotes around our arguments.
-The rest of the code just puts them in the right place by mapping our args list against the str function and applying it to sh.
-This is how you use it:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nb">prn </span><span class="p">(</span><span class="nf">mcall</span> <span class="nv">ls</span> <span class="nv">-l</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nb">prn </span><span class="p">(</span><span class="nf">mcall</span> <span class="nv">grep</span> <span class="nv">-rin</span> <span class="nb">not </span><span class="s">&quot;./&quot;</span><span class="p">))</span> <span class="c1">; We still need quotes around ./ because it&#39;s not valid syntax</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>By coincidence I blogged about clojure macros almost exactly one year ago: <a href="http://mattyjwilliams.blogspot.co.uk/2012/08/another-clojure-macro-tutorial-that-no.html">http://mattyjwilliams.blogspot.co.uk/2012/08/another-clojure-macro-tutorial-that-no.html</a></p>
-
-<h3>Elixir</h3>
-
-<p>Elixir is a lovely little language I&rsquo;ve been playing with recently, so naturally I wanted to try out the macros.
-I needed to ask a few questions on the irc channel (thanks ericmj and true_droid!), but I got it cracked:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="k">defmacro</span> <span class="n">mcall</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="k">do</span>
-</span><span class='line'><span class="k">    </span><span class="n">call</span> <span class="o">=</span> <span class="no">Enum</span><span class="o">.</span><span class="n">map_join</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="no">Macro</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="nv">&amp;1</span><span class="p">))</span>
-</span><span class='line'>    <span class="kn">quote</span> <span class="k">do</span>
-</span><span class='line'><span class="k">      </span><span class="no">System</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="kn">unquote</span><span class="p">(</span><span class="n">call</span><span class="p">))</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Again, not much magic, map_join maps our list using the Macro.to_string function then joins at the end, this is done outside of the quote since we will work it out at compile time.
-We then pass this to System.cmd in a quote block &ndash; which means don&rsquo;t evaluate this yet, that will happen when we call mcall at runtime.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="no">IO</span><span class="o">.</span><span class="n">inspect</span> <span class="no">MacroTest</span><span class="o">.</span><span class="n">mcall</span><span class="p">([</span><span class="n">ls</span><span class="p">,</span> <span class="o">-</span><span class="n">l</span><span class="p">])</span>
-</span><span class='line'><span class="no">IO</span><span class="o">.</span><span class="n">inspect</span> <span class="no">MacroTest</span><span class="o">.</span><span class="n">mcall</span><span class="p">([</span><span class="n">grep</span><span class="p">,</span> <span class="o">-</span><span class="n">rin</span><span class="p">,</span> <span class="k">def</span><span class="p">,</span> <span class="s2">&quot;./&quot;</span><span class="p">])</span> <span class="c1"># We still need quotes around ./ because it&#39;s not valid syntax</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1109,12 +1054,16 @@ We then pass this to System.cmd in a quote block &ndash; which means don&rsquo;t
   
     <section>
   <h1>Links</h1>
+  <p><a href="http://mattyw.net">mattyw.net</a></p>
   <p><a href="http://mattyjwilliams.blogspot.com">Old Blog</a></p>
-  <p><a href="http://www.stackoverflow.com/users/137839/mattyw">StackOverFlow</a></p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/10/18/snappy-juju-flasher-video/">Video: Juju Status Flasher on Ubuntu Snappy</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/10/12/keep-a-logbook/">Keep a Logbook and Love Your Tools</a>
@@ -1132,15 +1081,11 @@ We then pass this to System.cmd in a quote block &ndash; which means don&rsquo;t
         <a href="/blog/2015/04/02/what-have-you-learned-from-language-x/">What Have You Learned From Language X?</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/04/01/getting-software-done/">Getting Software Done</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/acme' style='font-size: 110.0%'>acme(1)</a> <a href='/blog/categories/clojure' style='font-size: 120.0%'>clojure(2)</a> <a href='/blog/categories/elixir' style='font-size: 120.0%'>elixir(2)</a> <a href='/blog/categories/generics' style='font-size: 110.0%'>generics(1)</a> <a href='/blog/categories/go' style='font-size: 160.0%'>go(6)</a> <a href='/blog/categories/gtd' style='font-size: 110.0%'>gtd(1)</a> <a href='/blog/categories/haskell' style='font-size: 110.0%'>haskell(1)</a> <a href='/blog/categories/juju' style='font-size: 120.0%'>juju(2)</a> <a href='/blog/categories/monads' style='font-size: 110.0%'>monads(1)</a> <a href='/blog/categories/mongo' style='font-size: 110.0%'>mongo(1)</a> <a href='/blog/categories/notebooks' style='font-size: 110.0%'>notebooks(1)</a> <a href='/blog/categories/pens' style='font-size: 110.0%'>pens(1)</a> <a href='/blog/categories/perlis' style='font-size: 110.0%'>perlis(1)</a> <a href='/blog/categories/productivity' style='font-size: 110.0%'>productivity(1)</a> <a href='/blog/categories/raspberrypi' style='font-size: 120.0%'>raspberrypi(2)</a> <a href='/blog/categories/snappy' style='font-size: 110.0%'>snappy(1)</a> <a href='/blog/categories/survey' style='font-size: 110.0%'>survey(1)</a> <a href='/blog/categories/tools' style='font-size: 110.0%'>tools(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 110.0%'>ubuntu(1)</a> <a href='/blog/categories/vim' style='font-size: 110.0%'>vim(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/acme' style='font-size: 110.0%'>acme(1)</a> <a href='/blog/categories/clojure' style='font-size: 120.0%'>clojure(2)</a> <a href='/blog/categories/elixir' style='font-size: 120.0%'>elixir(2)</a> <a href='/blog/categories/generics' style='font-size: 110.0%'>generics(1)</a> <a href='/blog/categories/go' style='font-size: 160.0%'>go(6)</a> <a href='/blog/categories/gtd' style='font-size: 110.0%'>gtd(1)</a> <a href='/blog/categories/haskell' style='font-size: 110.0%'>haskell(1)</a> <a href='/blog/categories/juju' style='font-size: 130.0%'>juju(3)</a> <a href='/blog/categories/monads' style='font-size: 110.0%'>monads(1)</a> <a href='/blog/categories/mongo' style='font-size: 110.0%'>mongo(1)</a> <a href='/blog/categories/notebooks' style='font-size: 110.0%'>notebooks(1)</a> <a href='/blog/categories/pens' style='font-size: 110.0%'>pens(1)</a> <a href='/blog/categories/perlis' style='font-size: 110.0%'>perlis(1)</a> <a href='/blog/categories/productivity' style='font-size: 110.0%'>productivity(1)</a> <a href='/blog/categories/raspberrypi' style='font-size: 130.0%'>raspberrypi(3)</a> <a href='/blog/categories/snappy' style='font-size: 120.0%'>snappy(2)</a> <a href='/blog/categories/survey' style='font-size: 110.0%'>survey(1)</a> <a href='/blog/categories/tools' style='font-size: 110.0%'>tools(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 120.0%'>ubuntu(2)</a> <a href='/blog/categories/vim' style='font-size: 110.0%'>vim(1)</a> </span>
 </section>
 
 <section>
