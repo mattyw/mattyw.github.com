@@ -4,7 +4,7 @@
   <title><![CDATA[Category: juju | mattyw]]></title>
   <link href="http://mattyw.github.io/blog/categories/juju/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2015-10-19T13:09:10+01:00</updated>
+  <updated>2015-10-30T09:38:00+00:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,73 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The remote-deployer charm: Playing with Juju during a tea break]]></title>
+    <link href="http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut/"/>
+    <updated>2015-10-29T11:23:00+00:00</updated>
+    <id>http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut</id>
+    <content type="html"><![CDATA[<p>The power of juju, and its model driven approach to deployments is
+undoubtedly the relationships. Being able to specify what services you
+depend on and what you provide to other services is extremely powerful.</p>
+
+<p>To get all of those benefits you need to write your app as a charm. With the new
+layering approach (<a href="http://blog.dasroot.net/2015-charming-2-point-oh.html">http://blog.dasroot.net/2015-charming-2-point-oh.html</a>) this has
+got even easier. There will be more posts about that coming soon.</p>
+
+<p>But I&rsquo;ve always pondered the following:</p>
+
+<p><em>Is there a useful shortcut around writing a charm that would let you deploy your app in &lt; 5 minutes</em></p>
+
+<p>My idea was the remote-deployer charm (<a href="https://jujucharms.com/u/mattyw/remote-deployer/trusty/2">https://jujucharms.com/u/mattyw/remote-deployer/trusty/2</a>)</p>
+
+<p>It doesn&rsquo;t replace writing your own charm, indeed the cases in which it&rsquo;s useful are limited.
+(you must have a publicly available file path that you want to deploy from)
+<strong>The intention is to facilitate playing with juju in less time than the typical tea break.</strong></p>
+
+<p>The idea goes:</p>
+
+<ol>
+<li>Deploy the charm</li>
+<li>Give it something to do</li>
+</ol>
+
+
+<p><code>bash
+juju deploy cs:~mattyw/trusty/remote-deployer-2
+juju action do remote-deployer/0 deploy source=https://github.com/mattyw/compojure-app-bootstrap
+</code></p>
+
+<p>The something to do is just pointing it at some remote file tree (like a github url).
+It downloads this file tree and looks for a file called <strong>remote-deployer</strong>. It runs this
+as the ubuntu user. The example above installs the clojure build tool lein and creates
+a hello world web app (<a href="https://github.com/mattyw/compojure-app-bootstrap">https://github.com/mattyw/compojure-app-bootstrap</a>)
+```bash</p>
+
+<h1>remote-deployer</h1>
+
+<h1>!/bin/sh</h1>
+
+<p>set -ev
+sudo apt-get install -y &mdash;force-yes openjdk-7-jre-headless
+sudo cp lein /usr/bin
+cd $HOME &amp;&amp; lein new compojure-app my-app
+cd $HOME/my-app &amp;&amp; nohup lein ring server &amp;
+open-port 3000
+```</p>
+
+<p>Juju fans will notice that the normal hook tools are available to you in this file.</p>
+
+<p>If you&rsquo;d like to suggest or help make improvements the project is here: <a href="https://github.com/mattyw/remote-deployer-charm">https://github.com/mattyw/remote-deployer-charm</a></p>
+
+<p>Take a look at in action:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2a2WxDN4ZJM" frameborder="0" allowfullscreen></iframe>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Video: Juju status flasher on ubuntu snappy]]></title>

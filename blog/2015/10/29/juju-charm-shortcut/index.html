@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Go playground as a service - mattyw</title>
+  <title>The remote-deployer charm: Playing with Juju during a tea break - mattyw</title>
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="Update: So I&rsquo;ve learned that there&rsquo;s actually some work to be done here around sandboxing before it&rsquo;s actually ready for public use &hellip;">
+  <meta name="description" content="The power of juju, and its model driven approach to deployments is
+undoubtedly the relationships. Being able to specify what services you
+depend on &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mattyw.github.io/blog/2013/10/30/go-playground-as-a-service">
+  <link rel="canonical" href="http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mattyw" type="application/atom+xml">
@@ -80,7 +82,7 @@
   
   <header>
     
-      <h1 class="entry-title">Go Playground as a Service</h1>
+      <h1 class="entry-title">The Remote-deployer Charm: Playing With Juju During a Tea Break</h1>
     
     
       <p class="meta">
@@ -96,7 +98,7 @@
   
 
 
-<time datetime="2013-10-30T13:08:00+00:00" pubdate data-updated="true">Oct 30<span>th</span>, 2013</time>
+<time datetime="2015-10-29T11:23:00+00:00" pubdate data-updated="true">Oct 29<span>th</span>, 2015</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -105,42 +107,73 @@
   </header>
 
 
-<div class="entry-content"><p><strong><em>Update</em></strong>: So I&rsquo;ve learned that there&rsquo;s actually some work to be done here around sandboxing before it&rsquo;s actually ready for public use. Until then I&rsquo;ve removed the server, but the code is still available if you want to play around with it in a trusted setting.</p>
+<div class="entry-content"><p>The power of juju, and its model driven approach to deployments is
+undoubtedly the relationships. Being able to specify what services you
+depend on and what you provide to other services is extremely powerful.</p>
 
-<p>One of the great things about go is the whole environment you get with it, gofmt, godoc, go get. It&rsquo;s all good stuff.
-There&rsquo;s also a <a href="http://play.golang.org">playground</a> for you to try things out on.
-The docs also have runnable examples in them based off a similar idea:
-<a href="http://golang.org/pkg/encoding/json/#example_Unmarshal">http://golang.org/pkg/encoding/json/#example_Unmarshal</a></p>
+<p>To get all of those benefits you need to write your app as a charm. With the new
+layering approach (<a href="http://blog.dasroot.net/2015-charming-2-point-oh.html">http://blog.dasroot.net/2015-charming-2-point-oh.html</a>) this has
+got even easier. There will be more posts about that coming soon.</p>
 
-<p>It&rsquo;s a great idea, it means you can actually try the code out while you&rsquo;re reading the docs. But it only works on code from the stdlib. But that makes sense doesn&rsquo;t it? You don&rsquo;t want to allow anyone to import some arbitrary package.</p>
+<p>But I&rsquo;ve always pondered the following:</p>
 
-<p>But it occured to me that when someone develops a package, the author might want to include runnable examples for their own code.</p>
+<p><em>Is there a useful shortcut around writing a charm that would let you deploy your app in &lt; 5 minutes</em></p>
 
-<p>The source for something similar to the playgrond is incuded in the go release (misc/goplay) I&rsquo;ve modified it very slightly to allow /compile to be called from any location.
-I&rsquo;ve called it <a href="http://github.com/mattyw/goplaas">goplaas</a> (It&rsquo;s not really as a service, but that&rsquo;s the standard suffix these days isn&#8217; it? And it got your attention!)</p>
+<p>My idea was the remote-deployer charm (<a href="https://jujucharms.com/u/mattyw/remote-deployer/trusty/2">https://jujucharms.com/u/mattyw/remote-deployer/trusty/2</a>)</p>
 
-<p>The idea is you install it on your own server, and it will have access to anything installed on your GOPATH. This means you can control what packages can be imported, and also the version.</p>
+<p>It doesn&rsquo;t replace writing your own charm, indeed the cases in which it&rsquo;s useful are limited.
+(you must have a publicly available file path that you want to deploy from)
+<strong>The intention is to facilitate playing with juju in less time than the typical tea break.</strong></p>
 
-<p>All you need to do is put some javascript and a textarea into a webpage, point it to your server and you&rsquo;re done.</p>
+<p>The idea goes:</p>
 
-<p>Here&rsquo;s an example using the loggo package from launchpad.net. Try it</p>
+<ol>
+<li>Deploy the charm</li>
+<li>Give it something to do</li>
+</ol>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>I've removed it - sorry</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I&rsquo;ll try to keep my server running with goplaas for the next few weeks. If it suddenly stops working, it&rsquo;s likely that I&rsquo;ve pulled the server down. You can experiment yourself by running</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>go install github.com/mattyw/goplaas
-</span><span class='line'>./goplaas -http :9999 <span class="c">#Listen on 9999</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>juju deploy cs:~mattyw/trusty/remote-deployer-2
+</span><span class='line'>juju action <span class="k">do </span>remote-deployer/0 deploy <span class="nb">source</span><span class="o">=</span>https://github.com/mattyw/compojure-app-bootstrap
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>goplaas includes a -compile flag for sending compilation instructions to another server, full instructions are in github.</p>
+<p>The something to do is just pointing it at some remote file tree (like a github url).
+It downloads this file tree and looks for a file called <strong>remote-deployer</strong>. It runs this
+as the ubuntu user. The example above installs the clojure build tool lein and creates
+a hello world web app (<a href="https://github.com/mattyw/compojure-app-bootstrap">https://github.com/mattyw/compojure-app-bootstrap</a>)</p>
 
-<p>A good next step would be to package this all up into a docker container to allow anyone to install it with relative ease</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># remote-deployer</span>
+</span><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="nb">set</span> -ev
+</span><span class='line'>sudo apt-get install -y --force-yes openjdk-7-jre-headless
+</span><span class='line'>sudo cp lein /usr/bin
+</span><span class='line'><span class="nb">cd</span> <span class="nv">$HOME</span> <span class="o">&amp;&amp;</span> lein new compojure-app my-app
+</span><span class='line'><span class="nb">cd</span> <span class="nv">$HOME</span>/my-app <span class="o">&amp;&amp;</span> nohup lein ring server &amp;
+</span><span class='line'>open-port 3000
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Juju fans will notice that the normal hook tools are available to you in this file.</p>
+
+<p>If you&rsquo;d like to suggest or help make improvements the project is here: <a href="https://github.com/mattyw/remote-deployer-charm">https://github.com/mattyw/remote-deployer-charm</a></p>
+
+<p>Take a look at in action:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2a2WxDN4ZJM" frameborder="0" allowfullscreen></iframe>
+
+
+
 </div>
 
 
@@ -163,12 +196,12 @@ I&rsquo;ve called it <a href="http://github.com/mattyw/goplaas">goplaas</a> (It&
   
 
 
-<time datetime="2013-10-30T13:08:00+00:00" pubdate data-updated="true">Oct 30<span>th</span>, 2013</time>
+<time datetime="2015-10-29T11:23:00+00:00" pubdate data-updated="true">Oct 29<span>th</span>, 2015</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/go/'>go</a>
+    <a class='category' href='/blog/categories/charms/'>charms</a>, <a class='category' href='/blog/categories/juju/'>juju</a>
   
 </span>
 
@@ -177,7 +210,7 @@ I&rsquo;ve called it <a href="http://github.com/mattyw/goplaas">goplaas</a> (It&
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2013/10/30/go-playground-as-a-service/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2013/10/30/go-playground-as-a-service/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -190,10 +223,8 @@ I&rsquo;ve called it <a href="http://github.com/mattyw/goplaas">goplaas</a> (It&
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/10/17/clojure-programming-in-acme/" title="Previous Post: Clojure programming in acme">&laquo; Clojure programming in acme</a>
+        <a class="basic-alignment left" href="/blog/2015/10/18/snappy-juju-flasher-video/" title="Previous Post: Video: Juju status flasher on ubuntu snappy">&laquo; Video: Juju status flasher on ubuntu snappy</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/04/14/vim-survey-results/" title="Next Post: Vim Survey Results">Vim Survey Results &raquo;</a>
       
     </p>
   </footer>
@@ -326,8 +357,8 @@ I&rsquo;ve called it <a href="http://github.com/mattyw/goplaas">goplaas</a> (It&
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://mattyw.github.io/blog/2013/10/30/go-playground-as-a-service/';
-        var disqus_url = 'http://mattyw.github.io/blog/2013/10/30/go-playground-as-a-service/';
+        var disqus_identifier = 'http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut/';
+        var disqus_url = 'http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut/';
         var disqus_script = 'embed.js';
       
     (function () {
