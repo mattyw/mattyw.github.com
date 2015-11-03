@@ -4,7 +4,7 @@
   <title><![CDATA[mattyw]]></title>
   <link href="http://mattyw.github.io/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2015-10-30T09:38:00+00:00</updated>
+  <updated>2015-11-03T19:26:48+00:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[jupsen: modelling networking partitions with juju]]></title>
+    <link href="http://mattyw.github.io/blog/2015/11/02/jupsen-modelling-networking-partitions-with-juju/"/>
+    <updated>2015-11-02T22:11:00+00:00</updated>
+    <id>http://mattyw.github.io/blog/2015/11/02/jupsen-modelling-networking-partitions-with-juju</id>
+    <content type="html"><![CDATA[<p>Jupsen is a tool that allows you to drop or delay packets between juju units.</p>
+
+<h2>Why is this useful?</h2>
+
+<p>Network problems happen, if you&rsquo;re working on a distributed system you need
+to deal with them, this is much easier to do if you&rsquo;re able to recreate these
+situations easily.</p>
+
+<p>With jupsen you can</p>
+
+<ul>
+<li>Block traffic between two units in only one direction</li>
+<li>Block traffic between two units in only both directions</li>
+<li>Delay packets in one direction</li>
+<li>Delay packets in both directions.</li>
+</ul>
+
+
+<p>This can be used to recreate some of the experiments in Kyle Kingsbury&rsquo;s jupsen series
+(from which I have shamefully taken the name) (<a href="https://aphyr.com/tags/jepsen">https://aphyr.com/tags/jepsen</a>)</p>
+
+<p>If you want to have a play around with jupsen you can get it here: (<a href="https://github.com/mattyw/jupsen">https://github.com/mattyw/jupsen</a>)</p>
+
+<p>If you want to see it in action you can take a look at this demo I gave at the recent
+Ubuntu Online Summit.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xp54gcMMUfQ" frameborder="0" allowfullscreen></iframe>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The remote-deployer charm: Playing with Juju during a tea break]]></title>
