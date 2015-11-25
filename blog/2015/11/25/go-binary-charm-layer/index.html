@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>What have you learned from language X? - mattyw</title>
+  <title>go binary charm layer - mattyw</title>
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="Alan Perlis wrote 1
-A language that doesn't affect the way you think about programming, is not worth knowing. That&rsquo;s an interesting statement, &hellip;">
+  <meta name="description" content="I like go. One of the things I like is not worrying about dependencies during deployment.
+You just scp your binary to your server and you&rsquo;re &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@ A language that doesn't affect the way you think about programming, is not worth
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mattyw.github.io/blog/2015/04/02/what-have-you-learned-from-language-x">
+  <link rel="canonical" href="http://mattyw.github.io/blog/2015/11/25/go-binary-charm-layer">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mattyw" type="application/atom+xml">
@@ -81,7 +81,7 @@ A language that doesn't affect the way you think about programming, is not worth
   
   <header>
     
-      <h1 class="entry-title">What Have You Learned From Language X?</h1>
+      <h1 class="entry-title">Go Binary Charm Layer</h1>
     
     
       <p class="meta">
@@ -97,7 +97,7 @@ A language that doesn't affect the way you think about programming, is not worth
   
 
 
-<time datetime="2015-04-02T16:58:00+01:00" pubdate data-updated="true">Apr 2<span>nd</span>, 2015</time>
+<time datetime="2015-11-25T09:26:00+00:00" pubdate data-updated="true">Nov 25<span>th</span>, 2015</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -106,17 +106,59 @@ A language that doesn't affect the way you think about programming, is not worth
   </header>
 
 
-<div class="entry-content"><p>Alan Perlis wrote</p>
+<div class="entry-content"><p>I like go. One of the things I like is not worrying about dependencies during deployment.
+You just scp your binary to your server and you&rsquo;re done. Well, after you configure it to connect to the
+database, ah yes, we forgot about haproxy, let&rsquo;s set that up as well, but after scping to
+a server and doing some minor setup you&rsquo;re ready to go, scale it out you say? Just scp to other
+servers, do the same config setup&hellip;&hellip;..</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>A language that doesn't affect the way you think about programming, is not worth knowing.</span></code></pre></td></tr></table></div></figure>
+<p>The solution to this problem is to use an orchestration tool like <a href="https://juju.ubuntu.com/about">juju</a>. Now thanks to the <a href="https://github.com/cloud-green/go-binary-layer">go binary layer</a> orchestrating your go program with juju couldn&rsquo;t be easier.</p>
+
+<p>Here&rsquo;s how it works. The go-binary layer looks in the top level of your charm for a go-binary.yaml file that contains the name of your binary and any arguments that should be passed to it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="c1">#go-binary.yaml</span>
+</span><span class='line'><span class="l-Scalar-Plain">binary</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">server</span>
+</span><span class='line'><span class="l-Scalar-Plain">args</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/etc/myserver/config.yaml</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>That&rsquo;s an interesting statement, it made me wonder what people think they&rsquo;ve learned from certain
-programming langues, and how much it differs between people.</p>
+<p>Your compiled binary should be placed in a &ldquo;files&rdquo; directory at the top level of your charm. Build your charm and you&rsquo;re all done.</p>
 
-<p>If you have a moment, I&rsquo;d love to know:
-<a href="https://docs.google.com/forms/d/1_Wc74F9UmGmYiD5lfJlwfFkYoEqVKsxV3_lX6Mvylno/viewform">Survey</a></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>tree
+</span><span class='line'>.
+</span><span class='line'>├── files
+</span><span class='line'>│   ├── server
+</span><span class='line'>├── go-binary.yaml
+</span><span class='line'>├── layer.yaml
+</span><span class='line'>├── metadata.yaml
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Under the covers the go-binary layer will add your binary to $PATH,write an upstart file for your binary and start it when the server starts.</p>
+
+<p>There are examples of this in action with the http (website) relation (<a href="https://github.com/mattyw/simple-server-charm">https://github.com/mattyw/simple-server-charm</a>)</p>
+
+<p>and with the mongodb relation (<a href="https://github.com/mattyw/simple-server-mongo-charm">https://github.com/mattyw/simple-server-mongo-charm</a>).</p>
+
+<p>If you&rsquo;d like to see these charms in action take a look at the following videos:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YgYOyf-3QwU" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Cf5o58MzCjs" frameborder="0" allowfullscreen></iframe>
+
 </div>
 
 
@@ -139,12 +181,12 @@ programming langues, and how much it differs between people.</p>
   
 
 
-<time datetime="2015-04-02T16:58:00+01:00" pubdate data-updated="true">Apr 2<span>nd</span>, 2015</time>
+<time datetime="2015-11-25T09:26:00+00:00" pubdate data-updated="true">Nov 25<span>th</span>, 2015</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/perlis/'>perlis</a>, <a class='category' href='/blog/categories/survey/'>survey</a>
+    <a class='category' href='/blog/categories/charms/'>charms</a>, <a class='category' href='/blog/categories/go/'>go</a>, <a class='category' href='/blog/categories/juju/'>juju</a>
   
 </span>
 
@@ -153,7 +195,7 @@ programming langues, and how much it differs between people.</p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2015/04/02/what-have-you-learned-from-language-x/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2015/04/02/what-have-you-learned-from-language-x/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2015/11/25/go-binary-charm-layer/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2015/11/25/go-binary-charm-layer/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -166,10 +208,8 @@ programming langues, and how much it differs between people.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/04/01/getting-software-done/" title="Previous Post: Getting Software Done">&laquo; Getting Software Done</a>
+        <a class="basic-alignment left" href="/blog/2015/11/02/jupsen-modelling-networking-partitions-with-juju/" title="Previous Post: jupsen: modelling networking partitions with juju">&laquo; jupsen: modelling networking partitions with juju</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/04/08/generics-and-monads-in-good-time/" title="Next Post: generics and monads in good time">generics and monads in good time &raquo;</a>
       
     </p>
   </footer>
@@ -302,8 +342,8 @@ programming langues, and how much it differs between people.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://mattyw.github.io/blog/2015/04/02/what-have-you-learned-from-language-x/';
-        var disqus_url = 'http://mattyw.github.io/blog/2015/04/02/what-have-you-learned-from-language-x/';
+        var disqus_identifier = 'http://mattyw.github.io/blog/2015/11/25/go-binary-charm-layer/';
+        var disqus_url = 'http://mattyw.github.io/blog/2015/11/25/go-binary-charm-layer/';
         var disqus_script = 'embed.js';
       
     (function () {

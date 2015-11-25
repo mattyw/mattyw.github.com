@@ -4,7 +4,7 @@
   <title><![CDATA[Category: juju | mattyw]]></title>
   <link href="http://mattyw.github.io/blog/categories/juju/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2015-11-03T19:26:48+00:00</updated>
+  <updated>2015-11-25T14:33:01+00:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,57 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[go binary charm layer]]></title>
+    <link href="http://mattyw.github.io/blog/2015/11/25/go-binary-charm-layer/"/>
+    <updated>2015-11-25T09:26:00+00:00</updated>
+    <id>http://mattyw.github.io/blog/2015/11/25/go-binary-charm-layer</id>
+    <content type="html"><![CDATA[<p>I like go. One of the things I like is not worrying about dependencies during deployment.
+You just scp your binary to your server and you&rsquo;re done. Well, after you configure it to connect to the
+database, ah yes, we forgot about haproxy, let&rsquo;s set that up as well, but after scping to
+a server and doing some minor setup you&rsquo;re ready to go, scale it out you say? Just scp to other
+servers, do the same config setup&hellip;&hellip;..</p>
+
+<p>The solution to this problem is to use an orchestration tool like <a href="https://juju.ubuntu.com/about">juju</a>. Now thanks to the <a href="https://github.com/cloud-green/go-binary-layer">go binary layer</a> orchestrating your go program with juju couldn&rsquo;t be easier.</p>
+
+<p>Here&rsquo;s how it works. The go-binary layer looks in the top level of your charm for a go-binary.yaml file that contains the name of your binary and any arguments that should be passed to it.
+```yaml</p>
+
+<h1>go-binary.yaml</h1>
+
+<p>binary: server
+args: /etc/myserver/config.yaml
+```</p>
+
+<p>Your compiled binary should be placed in a &ldquo;files&rdquo; directory at the top level of your charm. Build your charm and you&rsquo;re all done.
+<code>bash
+$ tree
+.
+├── files
+│   ├── server
+├── go-binary.yaml
+├── layer.yaml
+├── metadata.yaml
+</code></p>
+
+<p>Under the covers the go-binary layer will add your binary to $PATH,write an upstart file for your binary and start it when the server starts.</p>
+
+<p>There are examples of this in action with the http (website) relation (<a href="https://github.com/mattyw/simple-server-charm">https://github.com/mattyw/simple-server-charm</a>)</p>
+
+<p>and with the mongodb relation (<a href="https://github.com/mattyw/simple-server-mongo-charm">https://github.com/mattyw/simple-server-mongo-charm</a>).</p>
+
+<p>If you&rsquo;d like to see these charms in action take a look at the following videos:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YgYOyf-3QwU" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Cf5o58MzCjs" frameborder="0" allowfullscreen></iframe>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The remote-deployer charm: Playing with Juju during a tea break]]></title>

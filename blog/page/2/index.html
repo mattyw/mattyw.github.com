@@ -9,7 +9,7 @@
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="Today I finally got round to trying out something i&rsquo;d been meaning to look into for nearly a year, and seeing as clojure and editors seems to &hellip;">
+  <meta name="description" content="Update: So I&rsquo;ve learned that there&rsquo;s actually some work to be done here around sandboxing before it&rsquo;s actually ready for public use &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,79 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/30/go-playground-as-a-service/">Go Playground as a Service</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-30T13:08:00+00:00" pubdate data-updated="true">Oct 30<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/10/30/go-playground-as-a-service/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong><em>Update</em></strong>: So I&rsquo;ve learned that there&rsquo;s actually some work to be done here around sandboxing before it&rsquo;s actually ready for public use. Until then I&rsquo;ve removed the server, but the code is still available if you want to play around with it in a trusted setting.</p>
+
+<p>One of the great things about go is the whole environment you get with it, gofmt, godoc, go get. It&rsquo;s all good stuff.
+There&rsquo;s also a <a href="http://play.golang.org">playground</a> for you to try things out on.
+The docs also have runnable examples in them based off a similar idea:
+<a href="http://golang.org/pkg/encoding/json/#example_Unmarshal">http://golang.org/pkg/encoding/json/#example_Unmarshal</a></p>
+
+<p>It&rsquo;s a great idea, it means you can actually try the code out while you&rsquo;re reading the docs. But it only works on code from the stdlib. But that makes sense doesn&rsquo;t it? You don&rsquo;t want to allow anyone to import some arbitrary package.</p>
+
+<p>But it occured to me that when someone develops a package, the author might want to include runnable examples for their own code.</p>
+
+<p>The source for something similar to the playgrond is incuded in the go release (misc/goplay) I&rsquo;ve modified it very slightly to allow /compile to be called from any location.
+I&rsquo;ve called it <a href="http://github.com/mattyw/goplaas">goplaas</a> (It&rsquo;s not really as a service, but that&rsquo;s the standard suffix these days isn&#8217; it? And it got your attention!)</p>
+
+<p>The idea is you install it on your own server, and it will have access to anything installed on your GOPATH. This means you can control what packages can be imported, and also the version.</p>
+
+<p>All you need to do is put some javascript and a textarea into a webpage, point it to your server and you&rsquo;re done.</p>
+
+<p>Here&rsquo;s an example using the loggo package from launchpad.net. Try it</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>I've removed it - sorry</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;ll try to keep my server running with goplaas for the next few weeks. If it suddenly stops working, it&rsquo;s likely that I&rsquo;ve pulled the server down. You can experiment yourself by running</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>go install github.com/mattyw/goplaas
+</span><span class='line'>./goplaas -http :9999 <span class="c">#Listen on 9999</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>goplaas includes a -compile flag for sending compilation instructions to another server, full instructions are in github.</p>
+
+<p>A good next step would be to package this all up into a docker container to allow anyone to install it with relative ease</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -948,6 +1021,10 @@ is a great source for more information</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/11/25/go-binary-charm-layer/">Go Binary Charm Layer</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/11/02/jupsen-modelling-networking-partitions-with-juju/">Jupsen: Modelling Networking Partitions With Juju</a>
       </li>
     
@@ -983,15 +1060,11 @@ is a great source for more information</p>
         <a href="/blog/2014/04/14/vim-survey-results/">Vim Survey Results</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/10/30/go-playground-as-a-service/">Go Playground as a Service</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/acme' style='font-size: 110.0%'>acme(1)</a> <a href='/blog/categories/charms' style='font-size: 110.0%'>charms(1)</a> <a href='/blog/categories/clojure' style='font-size: 120.0%'>clojure(2)</a> <a href='/blog/categories/elixir' style='font-size: 120.0%'>elixir(2)</a> <a href='/blog/categories/generics' style='font-size: 110.0%'>generics(1)</a> <a href='/blog/categories/go' style='font-size: 160.0%'>go(6)</a> <a href='/blog/categories/gtd' style='font-size: 110.0%'>gtd(1)</a> <a href='/blog/categories/haskell' style='font-size: 110.0%'>haskell(1)</a> <a href='/blog/categories/juju' style='font-size: 140.0%'>juju(4)</a> <a href='/blog/categories/monads' style='font-size: 110.0%'>monads(1)</a> <a href='/blog/categories/mongo' style='font-size: 110.0%'>mongo(1)</a> <a href='/blog/categories/notebooks' style='font-size: 110.0%'>notebooks(1)</a> <a href='/blog/categories/pens' style='font-size: 110.0%'>pens(1)</a> <a href='/blog/categories/perlis' style='font-size: 110.0%'>perlis(1)</a> <a href='/blog/categories/productivity' style='font-size: 110.0%'>productivity(1)</a> <a href='/blog/categories/raspberrypi' style='font-size: 130.0%'>raspberrypi(3)</a> <a href='/blog/categories/snappy' style='font-size: 120.0%'>snappy(2)</a> <a href='/blog/categories/survey' style='font-size: 110.0%'>survey(1)</a> <a href='/blog/categories/tools' style='font-size: 110.0%'>tools(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 120.0%'>ubuntu(2)</a> <a href='/blog/categories/vim' style='font-size: 110.0%'>vim(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/acme' style='font-size: 108.57142857142857%'>acme(1)</a> <a href='/blog/categories/charms' style='font-size: 117.14285714285714%'>charms(2)</a> <a href='/blog/categories/clojure' style='font-size: 117.14285714285714%'>clojure(2)</a> <a href='/blog/categories/elixir' style='font-size: 117.14285714285714%'>elixir(2)</a> <a href='/blog/categories/generics' style='font-size: 108.57142857142857%'>generics(1)</a> <a href='/blog/categories/go' style='font-size: 160.0%'>go(7)</a> <a href='/blog/categories/gtd' style='font-size: 108.57142857142857%'>gtd(1)</a> <a href='/blog/categories/haskell' style='font-size: 108.57142857142857%'>haskell(1)</a> <a href='/blog/categories/juju' style='font-size: 142.85714285714286%'>juju(5)</a> <a href='/blog/categories/monads' style='font-size: 108.57142857142857%'>monads(1)</a> <a href='/blog/categories/mongo' style='font-size: 108.57142857142857%'>mongo(1)</a> <a href='/blog/categories/notebooks' style='font-size: 108.57142857142857%'>notebooks(1)</a> <a href='/blog/categories/pens' style='font-size: 108.57142857142857%'>pens(1)</a> <a href='/blog/categories/perlis' style='font-size: 108.57142857142857%'>perlis(1)</a> <a href='/blog/categories/productivity' style='font-size: 108.57142857142857%'>productivity(1)</a> <a href='/blog/categories/raspberrypi' style='font-size: 125.71428571428572%'>raspberrypi(3)</a> <a href='/blog/categories/snappy' style='font-size: 117.14285714285714%'>snappy(2)</a> <a href='/blog/categories/survey' style='font-size: 108.57142857142857%'>survey(1)</a> <a href='/blog/categories/tools' style='font-size: 108.57142857142857%'>tools(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 117.14285714285714%'>ubuntu(2)</a> <a href='/blog/categories/vim' style='font-size: 108.57142857142857%'>vim(1)</a> </span>
 </section>
 
 <section>

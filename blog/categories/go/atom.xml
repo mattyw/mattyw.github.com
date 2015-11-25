@@ -4,7 +4,7 @@
   <title><![CDATA[Category: go | mattyw]]></title>
   <link href="http://mattyw.github.io/blog/categories/go/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2015-11-03T19:26:48+00:00</updated>
+  <updated>2015-11-25T14:33:01+00:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,57 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[go binary charm layer]]></title>
+    <link href="http://mattyw.github.io/blog/2015/11/25/go-binary-charm-layer/"/>
+    <updated>2015-11-25T09:26:00+00:00</updated>
+    <id>http://mattyw.github.io/blog/2015/11/25/go-binary-charm-layer</id>
+    <content type="html"><![CDATA[<p>I like go. One of the things I like is not worrying about dependencies during deployment.
+You just scp your binary to your server and you&rsquo;re done. Well, after you configure it to connect to the
+database, ah yes, we forgot about haproxy, let&rsquo;s set that up as well, but after scping to
+a server and doing some minor setup you&rsquo;re ready to go, scale it out you say? Just scp to other
+servers, do the same config setup&hellip;&hellip;..</p>
+
+<p>The solution to this problem is to use an orchestration tool like <a href="https://juju.ubuntu.com/about">juju</a>. Now thanks to the <a href="https://github.com/cloud-green/go-binary-layer">go binary layer</a> orchestrating your go program with juju couldn&rsquo;t be easier.</p>
+
+<p>Here&rsquo;s how it works. The go-binary layer looks in the top level of your charm for a go-binary.yaml file that contains the name of your binary and any arguments that should be passed to it.
+```yaml</p>
+
+<h1>go-binary.yaml</h1>
+
+<p>binary: server
+args: /etc/myserver/config.yaml
+```</p>
+
+<p>Your compiled binary should be placed in a &ldquo;files&rdquo; directory at the top level of your charm. Build your charm and you&rsquo;re all done.
+<code>bash
+$ tree
+.
+├── files
+│   ├── server
+├── go-binary.yaml
+├── layer.yaml
+├── metadata.yaml
+</code></p>
+
+<p>Under the covers the go-binary layer will add your binary to $PATH,write an upstart file for your binary and start it when the server starts.</p>
+
+<p>There are examples of this in action with the http (website) relation (<a href="https://github.com/mattyw/simple-server-charm">https://github.com/mattyw/simple-server-charm</a>)</p>
+
+<p>and with the mongodb relation (<a href="https://github.com/mattyw/simple-server-mongo-charm">https://github.com/mattyw/simple-server-mongo-charm</a>).</p>
+
+<p>If you&rsquo;d like to see these charms in action take a look at the following videos:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YgYOyf-3QwU" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Cf5o58MzCjs" frameborder="0" allowfullscreen></iframe>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[generics and monads in good time]]></title>
@@ -288,109 +339,6 @@ units:
 <p>Now point your web browser to the url in public-address and there you go, you&rsquo;re deploying stuff from your pi.</p>
 
 <p>Juju doesn&rsquo;t stop at just deploying blogs. Check out <a href="http://juju.ubuntu.com">Juju</a> to see what else it can do for you</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[why I like elixir (and other go programmers might too)]]></title>
-    <link href="http://mattyw.github.io/blog/2013/06/17/why-i-like-elixir/"/>
-    <updated>2013-06-17T21:10:00+01:00</updated>
-    <id>http://mattyw.github.io/blog/2013/06/17/why-i-like-elixir</id>
-    <content type="html"><![CDATA[<h2>My journey to elixir</h2>
-
-<p>Erlang was the first functional language I ever used. When I first started reading <a href="http://pragprog.com/book/jaerlang/programming-erlang">Programming Erlang</a> by Joe Armstrong I was hooked, I was fascinated in a language where &ldquo;=&rdquo; didn&rsquo;t indicate an assignment, and the idea of pattern matching immediately struck a chord with me, I loved the one module per &lsquo;process&rsquo; thing. Erlang was set to become my favourite language, there was only one problem.</p>
-
-<p>I didn&rsquo;t like the syntax</p>
-
-<p>It&rsquo;s a completely personal view, I know people who love the syntax, I just didn&rsquo;t. To me it just didn&rsquo;t have what Christopher Alexander in &ldquo;The Timeless way of building&rdquo; calls &ldquo;quality without a name&rdquo;. I suppose I just didn&rsquo;t find it fun to type. So after re writing a couple of internal libraries in erlang to see what they looked like (they were much shorter and quite easy to read) I stopped using it, and started playing around with other languages like haskell and clojure.</p>
-
-<p>Clojure was my first lisp dialect and I enjoy it alot, the syntax, the whole homoiconicity thing, macro&rsquo;s aren&rsquo;t something you should use all the time &ndash; but it&rsquo;s comforting to know they&rsquo;re there to fall back on if you need them.</p>
-
-<p>Parallel to this functional language experimentation was another path &ndash; languages I used at work, which has seen me recently move from writing mostly in Python to Go. Go&rsquo;s channels and go routines are great, but when I started writing go code seriously (about 8 months ago) there was something that immediately stuck me.</p>
-
-<p>```go
-thing, err := someFunction()
-if err != nil {</p>
-
-<pre><code>//handle the error
-</code></pre>
-
-<p>}
-```
-Now, I&rsquo;m not going to start complaining about go&rsquo;s error handling, because I like it. But sometimes I would like to be able to make use of pattern matching and do something like this:</p>
-
-<p><code>go
-{thing, nil} = someFunction()
-</code></p>
-
-<p>And have my goroutine just dies if it fails. I know that&rsquo;s not go&rsquo;s philosophy with errors, and that&rsquo;s fine. I&rsquo;m just saying.</p>
-
-<h2>Work and Fun Collide</h2>
-
-<p>I&rsquo;ve spent the past 6 months saying to people that I would like a lisp dialect to be built onto go. What I really meant was I wanted a language that would let me do go style concurrency and play around with a repl, macros and all that functional programming <em>fun</em> stuff.</p>
-
-<p>It looks to me that elixir provides exactly that.</p>
-
-<p>Just look at these two programs. Both call a 10 second sleeping function on a seperate &lsquo;thread&rsquo; and wait for the response. The first in go, the second in elixir.
-```go
-package main</p>
-
-<p>import (</p>
-
-<pre><code>"fmt"
-"time"
-</code></pre>
-
-<p>)</p>
-
-<p>func longRun(response chan string) {</p>
-
-<pre><code>time.Sleep(10e9)
-response &lt;- "done"
-</code></pre>
-
-<p>}</p>
-
-<p>func main() {</p>
-
-<pre><code>response := make(chan string)
-go longRun(response)
-value := &lt;-response
-fmt.Println(value)
-</code></pre>
-
-<p>}
-<code>
-</code>elixir
-defmodule Main do</p>
-
-<p>  def longRun(pid) do</p>
-
-<pre><code>:timer.sleep(10000)
-pid &lt;- {:result, :done}
-</code></pre>
-
-<p>  end</p>
-
-<p>  def main() do</p>
-
-<pre><code>spawn(__MODULE__, :longRun, [self])
-receive do
-  {:result, value} -&gt;
-    IO.puts value
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>end</p>
-
-<p>Main.main()
-```</p>
-
-<p>They&rsquo;re not too different, elixir has spawn where go has &lsquo;go&rsquo; and elxir has receive where go has select. There&rsquo;s no denying that they&rsquo;re completely different languages, in some rather crude tests I&rsquo;ve done go does seem to be largely faster, but elixir let&rsquo;s me do meta-programming whilst forgetting about types.</p>
-
-<p>I expect to be blogging alot more about elixir in the future</p>
 ]]></content>
   </entry>
   
