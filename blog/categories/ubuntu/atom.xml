@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ubuntu | mattyw]]></title>
   <link href="http://mattyw.github.io/blog/categories/ubuntu/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2015-11-25T14:33:01+00:00</updated>
+  <updated>2015-12-03T13:08:33+00:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Juju, LXD, Ubuntu Snappy and a Raspberry pi 2]]></title>
+    <link href="http://mattyw.github.io/blog/2015/12/02/juju-lxd-snappy-pi/"/>
+    <updated>2015-12-02T23:21:00+00:00</updated>
+    <id>http://mattyw.github.io/blog/2015/12/02/juju-lxd-snappy-pi</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve <a href="http://blog.mattyw.net/blog/2015/10/18/snappy-juju-flasher-video/">previously</a> shown juju running on a raspberry pi 2, albeit deploying
+servers in ec2. Recently the lxd project <a href="https://linuxcontainers.org/lxd/getting-started-cli/">released a snap</a> that can be used
+to install lxd on ubuntu snappy, it even works on a raspberry pi 2.
+Around the same time lxd provider support landed in the master branch of juju.
+Naturally I thought it would be cool if I could use juju to spin up some units using lxd
+on my raspberry pi 2.</p>
+
+<p>The following video shows it in action:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GHUWc725U84" frameborder="0" allowfullscreen></iframe>
+
+
+<p>Obviously, it&rsquo;s slow and unofficial, but it&rsquo;s fun. For the curious these were the steps involved in getting this working.</p>
+
+<ul>
+<li>Juju was compiled using a raspbian image and <a href="http://dave.cheney.net/unofficial-arm-tarballs">Dave Cheney&rsquo;s arm release of go</a>.</li>
+<li>I needed to turn video memory right down and the available swap space up to 1GB, my sd card will not be happy.</li>
+<li>The compiled binaries were copied to my laptop where I built the juju snap and uploaded it to the raspberry pi 2 running ubuntu snappy.</li>
+<li>Juju wasn&rsquo;t able to access the unix socket lxd was using. So lxd was configured to work remotely, and juju was using it remotely (they just happened to be running on the same host)</li>
+<li>Some of juju&rsquo;s upstart scripts set extra limits on allowable open files and processes. upstart wouldn&rsquo;t start these services as they were beyond what was allowed. I removed these from the
+upstart file, which isn&rsquo;t something you&rsquo;d want to do normally.</li>
+</ul>
+
+
+<p>Not exactly production ready stuff, but playing is fun.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Video: Juju status flasher on ubuntu snappy]]></title>

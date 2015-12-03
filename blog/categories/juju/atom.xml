@@ -4,7 +4,7 @@
   <title><![CDATA[Category: juju | mattyw]]></title>
   <link href="http://mattyw.github.io/blog/categories/juju/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2015-11-25T14:33:01+00:00</updated>
+  <updated>2015-12-03T13:08:33+00:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Juju, LXD, Ubuntu Snappy and a Raspberry pi 2]]></title>
+    <link href="http://mattyw.github.io/blog/2015/12/02/juju-lxd-snappy-pi/"/>
+    <updated>2015-12-02T23:21:00+00:00</updated>
+    <id>http://mattyw.github.io/blog/2015/12/02/juju-lxd-snappy-pi</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve <a href="http://blog.mattyw.net/blog/2015/10/18/snappy-juju-flasher-video/">previously</a> shown juju running on a raspberry pi 2, albeit deploying
+servers in ec2. Recently the lxd project <a href="https://linuxcontainers.org/lxd/getting-started-cli/">released a snap</a> that can be used
+to install lxd on ubuntu snappy, it even works on a raspberry pi 2.
+Around the same time lxd provider support landed in the master branch of juju.
+Naturally I thought it would be cool if I could use juju to spin up some units using lxd
+on my raspberry pi 2.</p>
+
+<p>The following video shows it in action:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GHUWc725U84" frameborder="0" allowfullscreen></iframe>
+
+
+<p>Obviously, it&rsquo;s slow and unofficial, but it&rsquo;s fun. For the curious these were the steps involved in getting this working.</p>
+
+<ul>
+<li>Juju was compiled using a raspbian image and <a href="http://dave.cheney.net/unofficial-arm-tarballs">Dave Cheney&rsquo;s arm release of go</a>.</li>
+<li>I needed to turn video memory right down and the available swap space up to 1GB, my sd card will not be happy.</li>
+<li>The compiled binaries were copied to my laptop where I built the juju snap and uploaded it to the raspberry pi 2 running ubuntu snappy.</li>
+<li>Juju wasn&rsquo;t able to access the unix socket lxd was using. So lxd was configured to work remotely, and juju was using it remotely (they just happened to be running on the same host)</li>
+<li>Some of juju&rsquo;s upstart scripts set extra limits on allowable open files and processes. upstart wouldn&rsquo;t start these services as they were beyond what was allowed. I removed these from the
+upstart file, which isn&rsquo;t something you&rsquo;d want to do normally.</li>
+</ul>
+
+
+<p>Not exactly production ready stuff, but playing is fun.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[go binary charm layer]]></title>
@@ -211,138 +244,6 @@ juju deploy ubuntu
 </code></p>
 
 <p>Here&rsquo;s another link to my post about writing a charm to build a development machine: <a href="http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html">http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Taming the cloud with juju and raspberry pi]]></title>
-    <link href="http://mattyw.github.io/blog/2013/06/27/taming-the-cloud-with-juju-and-raspberry-pi/"/>
-    <updated>2013-06-27T08:01:00+01:00</updated>
-    <id>http://mattyw.github.io/blog/2013/06/27/taming-the-cloud-with-juju-and-raspberry-pi</id>
-    <content type="html"><![CDATA[<h2>The idea</h2>
-
-<p>We&rsquo;re going to use a raspberry pi and juju to setup a wordpress blog on aws.</p>
-
-<p>The raspberry pi is an amazing little gadget. Low power enough that I don&rsquo;t feel guilty about leaving it turned on overnight, but flexible enough that I can shove leds into it to grab my attention if needed.</p>
-
-<p><a href="http://juju.ubuntu.com">Juju</a> is ubuntu&rsquo;s answer to setting up services in the cloud. Once installed you simply setup your credentials with an existing cloud provider like aws or hp cloud and then deploy things into it. Setting up wordpress for example is as simple as
-<code>bash
-juju bootstrap # Setup the cloud environment
-juju deploy wordpress # Start an instance and install wordpress on it
-juju deploy mysql # Start an instance and install mysql on it
-juju add-relation wordpress mysql # Connect wordpress and mysql together
-juju expose wordpress #Allow wordpress to be accessed from a public ip
-</code></p>
-
-<h2>The Plan</h2>
-
-<ol>
-<li>Install go onto the raspberry pi</li>
-<li>Install juju</li>
-<li>Deploy a wordpress blog</li>
-</ol>
-
-
-<p>We&rsquo;re going to be installing the latest version of juju which is written in go.</p>
-
-<h2>Installing Go</h2>
-
-<p>Dave Cheney has written an excellent article on <a href="http://dave.cheney.net/2012/09/25/installing-go-on-the-raspberry-pi">Installing go on the raspberry pi</a>. On my model B (1.0 revision) I had to update raspi-config so that I could select the 240M/16M memory split, but you might have to see how you get on here. I choose to skip the tests and just ran ./make.bash to build go rather than all.bash.</p>
-
-<p>I was unable to build juju using go 1.0.3. I ended up building go 1.1.1 from source, which seemed to work fine. From memory I believe you need to setup a folder to be your GOPATH before you can install the latest version of go.</p>
-
-<h2>Installing Juju</h2>
-
-<p>Getting the latest tip of juju-core is easy using the go get command, it grabs all the dependencies for you, it does mean we&rsquo;re grabbing tip, but there are ways to fix that later if we need to. juju-core is hosted on launchpad.net which uses bazaar for source control. This means you need to install it before you can run go get. I was able to install it on raspian using
-<code>bash
-sudo apt-get update
-sudo apt-get bzr
-</code>
-Without doing the update I was unable to grab all of bzr&rsquo;s dependencies, so I recommend running the update first.</p>
-
-<p>Once bzr is installed you can install juju using go get:
-<code>bash
-sudo apt-get install libcurl4-gnutls-dev
-go get launchpad.net/juju-core/...
-</code>
-When it&rsquo;s finished you should find a juju binary installed. Mine ended up in my GOPATH, I think because I had something setup wrong somewhere. But if you&rsquo;ve got this far I&rsquo;m sure you&rsquo;ll be able to find it.</p>
-
-<h2>Setting up Juju</h2>
-
-<p>There&rsquo;s much better instructions for setting up juju <a href="https://juju.ubuntu.com/get-started/">here</a> The basic steps come down to</p>
-
-<ol>
-<li>Setting up a public key</li>
-<li>Generating an environments.yaml file</li>
-<li>Filling the file in with the data for your cloud provider</li>
-</ol>
-
-
-<p>I configured juju for aws. My ~/.juju/environments.yaml file looked like this:
-```yaml
-default: amazon
-environments:
-  amazon:</p>
-
-<pre><code>type: ec2
-  access-key: MY AWS ACCESS KEY
-  secret-key: MY AWS SECRET KEY
-  control-bucket: mattyw-ec2-bucket
-  admin-secret: mattyw-ec2-admin
-</code></pre>
-
-<p>```
-Once you&rsquo;ve done this, try running <strong>juju bootstrap</strong>. If it finishes without error wait a minute or so and run <strong>juju status</strong>, If all goes well you should see something like this</p>
-
-<p>```yaml
-$ juju status
-machines:
-  &ldquo;0&rdquo;:</p>
-
-<pre><code>agent-state: started
-agent-version: 1.11.0
-dns-name: ec2-23-20-228-111.compute-1.amazonaws.com
-instance-id: i-0bfc3d64
-series: precise
-</code></pre>
-
-<p>services: {}
-```</p>
-
-<p>Now we can start the business of getting a blog up and running:</p>
-
-<p><code>bash
-juju deploy wordpress
-juju deploy mysql
-juju add-relation wordpress mysql
-juju expose wordpress
-</code>
-You might have to wait a few minutes for everything to start up, keep taking a look at the output of <strong>juju status</strong> until you see all the agent-states running and expose true on wordpress.</p>
-
-<p>When it&rsquo;s done you should see something like this in your juju status output:
-```yaml
- wordpress:</p>
-
-<pre><code>charm: cs:precise/wordpress-15
-exposed: true
-relations:
-  db:
-  - mysql
-  loadbalancer:
-  - wordpress
-units:
-  wordpress/0:
-    agent-state: started
-    agent-version: 1.11.0
-    machine: "1"
-    public-address: ec2-54-234-76-38.compute-1.amazonaws.com
-</code></pre>
-
-<p>```</p>
-
-<p>Now point your web browser to the url in public-address and there you go, you&rsquo;re deploying stuff from your pi.</p>
-
-<p>Juju doesn&rsquo;t stop at just deploying blogs. Check out <a href="http://juju.ubuntu.com">Juju</a> to see what else it can do for you</p>
 ]]></content>
   </entry>
   
