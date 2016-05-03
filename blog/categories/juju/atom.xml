@@ -4,7 +4,7 @@
   <title><![CDATA[Category: juju | mattyw]]></title>
   <link href="http://mattyw.github.io/blog/categories/juju/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2015-12-03T13:08:33+00:00</updated>
+  <updated>2016-05-03T13:48:52+01:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How I write go]]></title>
+    <link href="http://mattyw.github.io/blog/2016/05/03/how-i-write-go/"/>
+    <updated>2016-05-03T09:16:00+01:00</updated>
+    <id>http://mattyw.github.io/blog/2016/05/03/how-i-write-go</id>
+    <content type="html"><![CDATA[<p>For a while I&rsquo;ve been wanting to do a short video to show my workflow for writing go.
+Last week I had a small bug to fix which I thought would fit perfectly, so I recorded
+me fixing it, and put some ragtime over the top.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PEbnzuMZceA" frameborder="0" allowfullscreen></iframe>
+
+
+<p>For those who are interested, here&rsquo;s a list of my tools:</p>
+
+<ul>
+<li>Tmux <a href="https://github.com/mattyw/dotfiles/blob/master/tmux.conf">(my tmux.conf is here)</a></li>
+<li>Vim &ndash; with no syntax highlighting &ndash; honestly, try it.
+
+<ul>
+<li>Vim is <a href="https://github.com/mattyw/dotfiles/blob/master/vimrc#L12">configured to run gofmt on save</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/mattyw/dotfiles/blob/master/t">&ldquo;t&rdquo; is a script I wrote</a> which notifys when the process is done. This is useful for long running tests</li>
+<li><a href="https://github.com/rogpeppe/godef">godef</a> and <a href="https://github.com/dgryski/vim-godef">vim-godef</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Juju, LXD, Ubuntu Snappy and a Raspberry pi 2]]></title>
@@ -191,59 +220,6 @@ raspberry pi for a moment.</p>
 <p>There&rsquo;s still some work to be done around optimising the various led patterns. There could be a way
 that I could convey seriousness of the problem via the leds, or even how long there has been a problem.
 That&rsquo;s work that can come later.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Why Juju means I don't need a VPS]]></title>
-    <link href="http://mattyw.github.io/blog/2013/08/16/why-juju-means-i-dont-need-a-vps/"/>
-    <updated>2013-08-16T13:45:00+01:00</updated>
-    <id>http://mattyw.github.io/blog/2013/08/16/why-juju-means-i-dont-need-a-vps</id>
-    <content type="html"><![CDATA[<p>tl;dr: <a href="http://juju.ubuntu.com">Juju</a> is aimed at deploying and scaling hundreds of services. But it&rsquo;s also a handy alternative to buying a VPS.</p>
-
-<p>I don&rsquo;t have a VPS, I have in the past but I&rsquo;ve never used them enough for me to be able to justify the cost long term.
-Juju provides a perfect solution to this use case.</p>
-
-<p>I have a very simple charm I call <a href="https://github.com/mattyw/charm_collection/tree/master/charms/precise/devenv">devenv</a>, it doesn&rsquo;t do much more than install stuff I use for doing development, like installing tmux and grabbing my configuration files. I&rsquo;ve blogged about it previously <a href="http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html">here</a>.</p>
-
-<p>This week I was having trouble getting a client library to connect to a simple server program I&rsquo;d written, I was lost with debugging but luckily the library author volunteered to help me out.
-I already had a binary of the server that could be used to generate the error in the client library, but I don&rsquo;t have a VPS, so what&rsquo;s the quickest way for me to make the server public so the library author can play around with it?</p>
-
-<p><a href="http://juju.ubuntu.com">Juju!</a></p>
-
-<p>All I needed to do was to add the following line to the start hook of my devenv charm:</p>
-
-<p><code>bash
-./app &amp;
-</code></p>
-
-<p>And copy the app binary to my charm directory.</p>
-
-<p>It&rsquo;s sort of an anti pattern &ndash; but because juju copies the whole charm dir when it deploys, it will grab any binaries in the charm dir as well, it&rsquo;s not a great idea to make use of this for serious deployments, but for me it was great</p>
-
-<p>With that done all I had to do was deploy it:
-<code>bash
-juju bootstrap
-juju deploy --repository=charms local:precise/devenv
-</code></p>
-
-<p>From deciding I wanted to deploy the binary &ndash; to having it deployed was under 5 minutes. 20 minutes later the library was fixed and the server was taken down
-<code>bash
-juju destroy-environment
-</code></p>
-
-<p>That was it. All in all it cost around $0.02 (that&rsquo;s just over 1p). Much better than having a VPS that would largely sit idle.</p>
-
-<p>Of course the other advantage with using juju is that I&rsquo;m not tied to a particular cloud provider, so I can choose which one I want depending on the pricing at that moment. And since juju now supports local mode you can do your charm development offline to save even more money!</p>
-
-<p><strong>Great, how does this help me?</strong></p>
-
-<p>If you&rsquo;re thinking of getting a VPS &ndash; but don&rsquo;t feel you can justify the cost because of the amount of use you&rsquo;d get out of it, then you really should try out juju. Once you&rsquo;ve got it installed there&rsquo;s a handy charm that just deploys ubuntu server, it&rsquo;s a great starting point for writing a charm to setup your own development environment.
-<code>bash
-juju deploy ubuntu
-</code></p>
-
-<p>Here&rsquo;s another link to my post about writing a charm to build a development machine: <a href="http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html">http://mattyjwilliams.blogspot.co.uk/2013/05/deploying-development-machine-with-juju.html</a></p>
 ]]></content>
   </entry>
   

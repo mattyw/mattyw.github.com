@@ -9,8 +9,8 @@
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="I&rsquo;ve previously shown juju running on a raspberry pi 2, albeit deploying
-servers in ec2. Recently the lxd project released a snap that can be &hellip;">
+  <meta name="description" content="For a while I&rsquo;ve been wanting to do a short video to show my workflow for writing go.
+Last week I had a small bug to fix which I thought would &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,64 @@ servers in ec2. Recently the lxd project released a snap that can be &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/05/03/how-i-write-go/">How I Write Go</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-05-03T09:16:00+01:00" pubdate data-updated="true">May 3<span>rd</span>, 2016</time>
+        
+         | <a href="/blog/2016/05/03/how-i-write-go/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For a while I&rsquo;ve been wanting to do a short video to show my workflow for writing go.
+Last week I had a small bug to fix which I thought would fit perfectly, so I recorded
+me fixing it, and put some ragtime over the top.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PEbnzuMZceA" frameborder="0" allowfullscreen></iframe>
+
+
+<p>For those who are interested, here&rsquo;s a list of my tools:</p>
+
+<ul>
+<li>Tmux <a href="https://github.com/mattyw/dotfiles/blob/master/tmux.conf">(my tmux.conf is here)</a></li>
+<li>Vim &ndash; with no syntax highlighting &ndash; honestly, try it.
+
+<ul>
+<li>Vim is <a href="https://github.com/mattyw/dotfiles/blob/master/vimrc#L12">configured to run gofmt on save</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/mattyw/dotfiles/blob/master/t">&ldquo;t&rdquo; is a script I wrote</a> which notifys when the process is done. This is useful for long running tests</li>
+<li><a href="https://github.com/rogpeppe/godef">godef</a> and <a href="https://github.com/dgryski/vim-godef">vim-godef</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -801,59 +859,6 @@ programming langues, and how much it differs between people.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/01/getting-software-done/">Getting Software Done</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-01T17:10:00+01:00" pubdate data-updated="true">Apr 1<span>st</span>, 2015</time>
-        
-         | <a href="/blog/2015/04/01/getting-software-done/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I’ve recently finished reading Getting Things Done. And I’m trying it out as my method for organising all of my work.
-Regardless of how it goes there are several key ideas which I think transfer directly onto the world of software development. These are (in no particular order):</p>
-
-<ul>
-<li>If something takes less than 2 minutes do it,</li>
-<li>Stuff that needs doing is defined as something that isn’t how or where is should be.</li>
-<li>A project (something that needs planning) is something that requires more than one action to complete</li>
-<li>Always think in terms of “What’s the next action?”</li>
-</ul>
-
-
-<p>This last one I consider crucial especially when it comes to learning new things. I’ve been guilty of having goals such as “learn functional programming”.
-This type of thing is far too broad, you need to think it through until you end up on the next thing that needs doing to reach your goal.
-All of us are guilty of having a number of projects “on the go” as well. I’ve found forcing myself to think about the next action has really helped me make progress with them.
-In some cases I’ve made progress on projects that haven’t made progress in >2 years.
-Like everything, GTD is no silver bullet, and isn’t for everyone, but I think the book is worth reading, if you don’t find it useful, at least you know.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -872,6 +877,10 @@ Like everything, GTD is no silver bullet, and isn’t for everyone, but I think 
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/03/how-i-write-go/">How I Write Go</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/12/02/juju-lxd-snappy-pi/">Juju, LXD, Ubuntu Snappy and a Raspberry Pi 2</a>
@@ -909,15 +918,11 @@ Like everything, GTD is no silver bullet, and isn’t for everyone, but I think 
         <a href="/blog/2015/04/02/what-have-you-learned-from-language-x/">What Have You Learned From Language X?</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/04/01/getting-software-done/">Getting Software Done</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/acme' style='font-size: 108.57142857142857%'>acme(1)</a> <a href='/blog/categories/charms' style='font-size: 117.14285714285714%'>charms(2)</a> <a href='/blog/categories/clojure' style='font-size: 117.14285714285714%'>clojure(2)</a> <a href='/blog/categories/elixir' style='font-size: 117.14285714285714%'>elixir(2)</a> <a href='/blog/categories/generics' style='font-size: 108.57142857142857%'>generics(1)</a> <a href='/blog/categories/go' style='font-size: 160.0%'>go(7)</a> <a href='/blog/categories/gtd' style='font-size: 108.57142857142857%'>gtd(1)</a> <a href='/blog/categories/haskell' style='font-size: 108.57142857142857%'>haskell(1)</a> <a href='/blog/categories/juju' style='font-size: 151.42857142857144%'>juju(6)</a> <a href='/blog/categories/lxd' style='font-size: 108.57142857142857%'>lxd(1)</a> <a href='/blog/categories/monads' style='font-size: 108.57142857142857%'>monads(1)</a> <a href='/blog/categories/mongo' style='font-size: 108.57142857142857%'>mongo(1)</a> <a href='/blog/categories/notebooks' style='font-size: 108.57142857142857%'>notebooks(1)</a> <a href='/blog/categories/pens' style='font-size: 108.57142857142857%'>pens(1)</a> <a href='/blog/categories/perlis' style='font-size: 108.57142857142857%'>perlis(1)</a> <a href='/blog/categories/productivity' style='font-size: 108.57142857142857%'>productivity(1)</a> <a href='/blog/categories/raspberrypi' style='font-size: 134.28571428571428%'>raspberrypi(4)</a> <a href='/blog/categories/snappy' style='font-size: 125.71428571428572%'>snappy(3)</a> <a href='/blog/categories/survey' style='font-size: 108.57142857142857%'>survey(1)</a> <a href='/blog/categories/tools' style='font-size: 108.57142857142857%'>tools(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 125.71428571428572%'>ubuntu(3)</a> <a href='/blog/categories/vim' style='font-size: 108.57142857142857%'>vim(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/acme' style='font-size: 107.5%'>acme(1)</a> <a href='/blog/categories/charms' style='font-size: 115.0%'>charms(2)</a> <a href='/blog/categories/clojure' style='font-size: 115.0%'>clojure(2)</a> <a href='/blog/categories/elixir' style='font-size: 115.0%'>elixir(2)</a> <a href='/blog/categories/generics' style='font-size: 107.5%'>generics(1)</a> <a href='/blog/categories/go' style='font-size: 160.0%'>go(8)</a> <a href='/blog/categories/gtd' style='font-size: 107.5%'>gtd(1)</a> <a href='/blog/categories/haskell' style='font-size: 107.5%'>haskell(1)</a> <a href='/blog/categories/juju' style='font-size: 152.5%'>juju(7)</a> <a href='/blog/categories/lxd' style='font-size: 107.5%'>lxd(1)</a> <a href='/blog/categories/monads' style='font-size: 107.5%'>monads(1)</a> <a href='/blog/categories/mongo' style='font-size: 107.5%'>mongo(1)</a> <a href='/blog/categories/notebooks' style='font-size: 107.5%'>notebooks(1)</a> <a href='/blog/categories/pens' style='font-size: 107.5%'>pens(1)</a> <a href='/blog/categories/perlis' style='font-size: 107.5%'>perlis(1)</a> <a href='/blog/categories/productivity' style='font-size: 107.5%'>productivity(1)</a> <a href='/blog/categories/raspberrypi' style='font-size: 130.0%'>raspberrypi(4)</a> <a href='/blog/categories/snappy' style='font-size: 122.5%'>snappy(3)</a> <a href='/blog/categories/survey' style='font-size: 107.5%'>survey(1)</a> <a href='/blog/categories/tools' style='font-size: 107.5%'>tools(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 122.5%'>ubuntu(3)</a> <a href='/blog/categories/vim' style='font-size: 107.5%'>vim(1)</a> </span>
 </section>
 
 <section>
@@ -968,7 +973,7 @@ Like everything, GTD is no silver bullet, and isn’t for everyone, but I think 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Matt Williams -
+  Copyright &copy; 2016 - Matt Williams -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

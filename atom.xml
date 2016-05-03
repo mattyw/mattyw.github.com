@@ -4,7 +4,7 @@
   <title><![CDATA[mattyw]]></title>
   <link href="http://mattyw.github.io/atom.xml" rel="self"/>
   <link href="http://mattyw.github.io/"/>
-  <updated>2015-12-03T13:08:33+00:00</updated>
+  <updated>2016-05-03T13:48:52+01:00</updated>
   <id>http://mattyw.github.io/</id>
   <author>
     <name><![CDATA[Matt Williams]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How I write go]]></title>
+    <link href="http://mattyw.github.io/blog/2016/05/03/how-i-write-go/"/>
+    <updated>2016-05-03T09:16:00+01:00</updated>
+    <id>http://mattyw.github.io/blog/2016/05/03/how-i-write-go</id>
+    <content type="html"><![CDATA[<p>For a while I&rsquo;ve been wanting to do a short video to show my workflow for writing go.
+Last week I had a small bug to fix which I thought would fit perfectly, so I recorded
+me fixing it, and put some ragtime over the top.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PEbnzuMZceA" frameborder="0" allowfullscreen></iframe>
+
+
+<p>For those who are interested, here&rsquo;s a list of my tools:</p>
+
+<ul>
+<li>Tmux <a href="https://github.com/mattyw/dotfiles/blob/master/tmux.conf">(my tmux.conf is here)</a></li>
+<li>Vim &ndash; with no syntax highlighting &ndash; honestly, try it.
+
+<ul>
+<li>Vim is <a href="https://github.com/mattyw/dotfiles/blob/master/vimrc#L12">configured to run gofmt on save</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/mattyw/dotfiles/blob/master/t">&ldquo;t&rdquo; is a script I wrote</a> which notifys when the process is done. This is useful for long running tests</li>
+<li><a href="https://github.com/rogpeppe/godef">godef</a> and <a href="https://github.com/dgryski/vim-godef">vim-godef</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Juju, LXD, Ubuntu Snappy and a Raspberry pi 2]]></title>

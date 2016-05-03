@@ -5,13 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>The remote-deployer charm: Playing with Juju during a tea break - mattyw</title>
+  <title>How I write go - mattyw</title>
   <meta name="author" content="Matt Williams">
 
   
-  <meta name="description" content="The power of juju, and its model driven approach to deployments is
-undoubtedly the relationships. Being able to specify what services you
-depend on &hellip;">
+  <meta name="description" content="For a while I&rsquo;ve been wanting to do a short video to show my workflow for writing go.
+Last week I had a small bug to fix which I thought would &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +19,7 @@ depend on &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut">
+  <link rel="canonical" href="http://mattyw.github.io/blog/2016/05/03/how-i-write-go">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mattyw" type="application/atom+xml">
@@ -82,7 +81,7 @@ depend on &hellip;">
   
   <header>
     
-      <h1 class="entry-title">The Remote-deployer Charm: Playing With Juju During a Tea Break</h1>
+      <h1 class="entry-title">How I Write Go</h1>
     
     
       <p class="meta">
@@ -98,7 +97,7 @@ depend on &hellip;">
   
 
 
-<time datetime="2015-10-29T11:23:00+00:00" pubdate data-updated="true">Oct 29<span>th</span>, 2015</time>
+<time datetime="2016-05-03T09:16:00+01:00" pubdate data-updated="true">May 3<span>rd</span>, 2016</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -107,72 +106,26 @@ depend on &hellip;">
   </header>
 
 
-<div class="entry-content"><p>The power of juju, and its model driven approach to deployments is
-undoubtedly the relationships. Being able to specify what services you
-depend on and what you provide to other services is extremely powerful.</p>
+<div class="entry-content"><p>For a while I&rsquo;ve been wanting to do a short video to show my workflow for writing go.
+Last week I had a small bug to fix which I thought would fit perfectly, so I recorded
+me fixing it, and put some ragtime over the top.</p>
 
-<p>To get all of those benefits you need to write your app as a charm. With the new
-layering approach (<a href="http://blog.dasroot.net/2015-charming-2-point-oh.html">http://blog.dasroot.net/2015-charming-2-point-oh.html</a>) this has
-got even easier. There will be more posts about that coming soon.</p>
-
-<p>But I&rsquo;ve always pondered the following:</p>
-
-<p><em>Is there a useful shortcut around writing a charm that would let you deploy your app in &lt; 5 minutes</em></p>
-
-<p>My idea was the remote-deployer charm (<a href="https://jujucharms.com/u/mattyw/remote-deployer/trusty/2">https://jujucharms.com/u/mattyw/remote-deployer/trusty/2</a>)</p>
-
-<p>It doesn&rsquo;t replace writing your own charm, indeed the cases in which it&rsquo;s useful are limited.
-(you must have a publicly available file path that you want to deploy from)
-<strong>The intention is to facilitate playing with juju in less time than the typical tea break.</strong></p>
-
-<p>The idea goes:</p>
-
-<ol>
-<li>Deploy the charm</li>
-<li>Give it something to do</li>
-</ol>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PEbnzuMZceA" frameborder="0" allowfullscreen></iframe>
 
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>juju deploy cs:~mattyw/trusty/remote-deployer-2
-</span><span class='line'>juju action <span class="k">do </span>remote-deployer/0 deploy <span class="nb">source</span><span class="o">=</span>https://github.com/mattyw/compojure-app-bootstrap
-</span></code></pre></td></tr></table></div></figure>
+<p>For those who are interested, here&rsquo;s a list of my tools:</p>
 
+<ul>
+<li>Tmux <a href="https://github.com/mattyw/dotfiles/blob/master/tmux.conf">(my tmux.conf is here)</a></li>
+<li>Vim &ndash; with no syntax highlighting &ndash; honestly, try it.
 
-<p>The something to do is just pointing it at some remote file tree (like a github url).
-It downloads this file tree and looks for a file called <strong>remote-deployer</strong>. It runs this
-as the ubuntu user. The example above installs the clojure build tool lein and creates
-a hello world web app (<a href="https://github.com/mattyw/compojure-app-bootstrap">https://github.com/mattyw/compojure-app-bootstrap</a>)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># remote-deployer</span>
-</span><span class='line'><span class="c">#!/bin/sh</span>
-</span><span class='line'><span class="nb">set</span> -ev
-</span><span class='line'>sudo apt-get install -y --force-yes openjdk-7-jre-headless
-</span><span class='line'>sudo cp lein /usr/bin
-</span><span class='line'><span class="nb">cd</span> <span class="nv">$HOME</span> <span class="o">&amp;&amp;</span> lein new compojure-app my-app
-</span><span class='line'><span class="nb">cd</span> <span class="nv">$HOME</span>/my-app <span class="o">&amp;&amp;</span> nohup lein ring server &amp;
-</span><span class='line'>open-port 3000
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Juju fans will notice that the normal hook tools are available to you in this file.</p>
-
-<p>If you&rsquo;d like to suggest or help make improvements the project is here: <a href="https://github.com/mattyw/remote-deployer-charm">https://github.com/mattyw/remote-deployer-charm</a></p>
-
-<p>Take a look at in action:</p>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/2a2WxDN4ZJM" frameborder="0" allowfullscreen></iframe>
-
-
+<ul>
+<li>Vim is <a href="https://github.com/mattyw/dotfiles/blob/master/vimrc#L12">configured to run gofmt on save</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/mattyw/dotfiles/blob/master/t">&ldquo;t&rdquo; is a script I wrote</a> which notifys when the process is done. This is useful for long running tests</li>
+<li><a href="https://github.com/rogpeppe/godef">godef</a> and <a href="https://github.com/dgryski/vim-godef">vim-godef</a></li>
+</ul>
 
 </div>
 
@@ -196,12 +149,12 @@ a hello world web app (<a href="https://github.com/mattyw/compojure-app-bootstra
   
 
 
-<time datetime="2015-10-29T11:23:00+00:00" pubdate data-updated="true">Oct 29<span>th</span>, 2015</time>
+<time datetime="2016-05-03T09:16:00+01:00" pubdate data-updated="true">May 3<span>rd</span>, 2016</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/charms/'>charms</a>, <a class='category' href='/blog/categories/juju/'>juju</a>
+    <a class='category' href='/blog/categories/go/'>go</a>, <a class='category' href='/blog/categories/juju/'>juju</a>
   
 </span>
 
@@ -210,7 +163,7 @@ a hello world web app (<a href="https://github.com/mattyw/compojure-app-bootstra
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mattyw.github.io/blog/2016/05/03/how-i-write-go/" data-via="matty_jwilliams" data-counturl="http://mattyw.github.io/blog/2016/05/03/how-i-write-go/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -223,10 +176,8 @@ a hello world web app (<a href="https://github.com/mattyw/compojure-app-bootstra
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/10/18/snappy-juju-flasher-video/" title="Previous Post: Video: Juju status flasher on ubuntu snappy">&laquo; Video: Juju status flasher on ubuntu snappy</a>
+        <a class="basic-alignment left" href="/blog/2015/12/02/juju-lxd-snappy-pi/" title="Previous Post: Juju, LXD, Ubuntu Snappy and a Raspberry pi 2">&laquo; Juju, LXD, Ubuntu Snappy and a Raspberry pi 2</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/11/02/jupsen-modelling-networking-partitions-with-juju/" title="Next Post: jupsen: modelling networking partitions with juju">jupsen: modelling networking partitions with juju &raquo;</a>
       
     </p>
   </footer>
@@ -359,8 +310,8 @@ a hello world web app (<a href="https://github.com/mattyw/compojure-app-bootstra
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut/';
-        var disqus_url = 'http://mattyw.github.io/blog/2015/10/29/juju-charm-shortcut/';
+        var disqus_identifier = 'http://mattyw.github.io/blog/2016/05/03/how-i-write-go/';
+        var disqus_url = 'http://mattyw.github.io/blog/2016/05/03/how-i-write-go/';
         var disqus_script = 'embed.js';
       
     (function () {
